@@ -1,0 +1,28 @@
+/* Mock-up Factory — design tokens (Borght).
+   Enige bron van kleur/typografie/vorm voor alle mock-ups. Niet forken; importeren:
+     <link rel="stylesheet" href="../shared/assets/tokens.css">
+   Waarden zijn afgeleid van docs/assets/borght-tokens.css. */
+:root{
+  --navy:#002060; --navy-2:#1F4E79; --blue:#0069B4; --green:#8CC63F;
+  --ink:#262626; --surface:#F7F7FA; --card:#FFFFFF;
+  --g700:#4A4A4A; --g500:#6B7280; --g400:#9AA0A6; --g200:#E3E5E9; --g100:#EEF1F5;
+  --ok:#2E7D32; --ok-bg:#E8F3E8; --warn:#B8860B; --warn-bg:#FBF1DD;
+  --err:#C62828; --err-bg:#FBEAEA;
+  --radius:10px; --radius-sm:6px;
+  --shadow-1:0 1px 2px rgba(0,32,96,.06); --shadow-2:0 6px 20px rgba(0,32,96,.10);
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-6:24px; --sp-8:32px;
+  --font:Calibri,"Segoe UI",system-ui,-apple-system,Arial,sans-serif; --track:.10em;
+  --bar:var(--navy); --ground:var(--surface);
+}
+@media (prefers-color-scheme:dark){
+  :root{--navy:#7FA8E0;--navy-2:#5C86BE;--blue:#4E9BE0;--ink:#E7EAF0;--surface:#0E1420;--card:#161E2E;
+    --g700:#C4CBD6;--g500:#9BA5B4;--g400:#7C8698;--g200:#2A3446;--g100:#1D2634;--ok:#6FBF73;--ok-bg:#14301A;
+    --warn:#E0B84E;--warn-bg:#33290F;--err:#F0918C;--err-bg:#3A1817;
+    --shadow-1:0 1px 2px rgba(0,0,0,.4);--shadow-2:0 6px 20px rgba(0,0,0,.5);--bar:#0A1120;--ground:#0A0F18;}
+}
+:root[data-theme="light"]{--navy:#002060;--navy-2:#1F4E79;--blue:#0069B4;--ink:#262626;--surface:#F7F7FA;--card:#FFFFFF;
+  --g700:#4A4A4A;--g500:#6B7280;--g400:#9AA0A6;--g200:#E3E5E9;--g100:#EEF1F5;--ok:#2E7D32;--ok-bg:#E8F3E8;
+  --warn:#B8860B;--warn-bg:#FBF1DD;--err:#C62828;--err-bg:#FBEAEA;--bar:var(--navy);--ground:var(--surface);}
+:root[data-theme="dark"]{--navy:#7FA8E0;--navy-2:#5C86BE;--blue:#4E9BE0;--ink:#E7EAF0;--surface:#0E1420;--card:#161E2E;
+  --g700:#C4CBD6;--g500:#9BA5B4;--g400:#7C8698;--g200:#2A3446;--g100:#1D2634;--ok:#6FBF73;--ok-bg:#14301A;
+  --warn:#E0B84E;--warn-bg:#33290F;--err:#F0918C;--err-bg:#3A1817;--bar:#0A1120;--ground:#0A0F18;}

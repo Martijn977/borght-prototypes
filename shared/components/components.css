@@ -1,0 +1,44 @@
+/* Mock-up Factory — basiscomponenten (prefix mf-). Consumeren tokens.css.
+   Elke mock-up gebruikt deze klassen zodat de look consistent is. */
+*{box-sizing:border-box;}
+body{margin:0;font-family:var(--font);color:var(--ink);background:var(--ground);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+.mf-wrap{max-width:1160px;margin:0 auto;padding:0 var(--sp-4) var(--sp-8);}
+h1,h2,h3,h4{margin:0;text-wrap:balance;}
+.mf-num{font-variant-numeric:tabular-nums;}
+.mf-lbl{font-size:11px;font-weight:700;letter-spacing:var(--track);text-transform:uppercase;color:var(--g500);}
+.mf-note{font-size:13px;color:var(--g500);}
+
+/* Topbar met verplichte demo-badge */
+.mf-topbar{background:var(--bar);color:#fff;padding:12px 0;}
+.mf-topbar .mf-wrap{display:flex;align-items:center;gap:var(--sp-4);padding-bottom:0;}
+.mf-brand{font-size:17px;font-weight:700;}
+.mf-demo{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:2px 8px;border-radius:999px;}
+.mf-spacer{flex:1;}
+.mf-theme{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:var(--radius-sm);padding:5px 12px;font-size:13px;cursor:pointer;}
+
+/* Tabs */
+.mf-tabs{border-bottom:1px solid var(--g200);background:var(--card);}
+.mf-tabs .mf-wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:0;padding-bottom:0;}
+.mf-tab{background:none;border:none;border-bottom:3px solid transparent;padding:14px 6px;margin-right:22px;color:var(--g500);font-size:15px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;gap:2px;text-align:left;}
+.mf-tab[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--navy);}
+.mf-tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px;}
+
+/* Card / badge / button / kpi */
+.mf-card{background:var(--card);border:1px solid var(--g200);border-radius:var(--radius);box-shadow:var(--shadow-1);padding:var(--sp-6);}
+.mf-card h3{font-size:15px;color:var(--navy);margin-bottom:var(--sp-4);}
+.mf-btn{border:1px solid var(--navy);background:var(--navy);color:#fff;border-radius:var(--radius-sm);padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;}
+.mf-btn.ghost{background:transparent;color:var(--navy);}
+.mf-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.mf-badge{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;display:inline-block;}
+.mf-badge.ok{background:var(--ok-bg);color:var(--ok);}
+.mf-badge.warn{background:var(--warn-bg);color:var(--warn);}
+.mf-badge.err{background:var(--err-bg);color:var(--err);}
+.mf-badge.neutral{background:var(--g100);color:var(--g500);}
+.mf-kpi .v{font-size:30px;font-weight:700;letter-spacing:-.5px;}
+
+/* Tabellen */
+.mf-table{width:100%;border-collapse:collapse;}
+.mf-table thead th{text-align:left;font-size:11px;letter-spacing:var(--track);text-transform:uppercase;color:var(--g500);padding:10px 12px;border-bottom:1px solid var(--g200);font-weight:700;}
+.mf-table tbody td{padding:12px;border-bottom:1px solid var(--g100);font-size:14px;}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
