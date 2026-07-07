@@ -25,7 +25,7 @@ var UI={
   "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
   "besluit.basis":"Waarop rust deze keuze? — feiten, geen advies","besluit.reason":"Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor",
   "besluit.commit":"Vastleggen als beslissing","val.concept":"Conceptconclusie (FlexCare)","val.concept-status":"Concept — nog niet gevalideerd","val.concl":"Onderbouwing onvolledig (8/10). Open vragen op Gezag en Vervanging. FlexCare structureert en onderbouwt; het oordeel is aan de mens.","val.onz":"Onzekerheid: middel — 2 open vragen, 1 bron gewijzigd.","val.kies":"Kies validatorrol…","val.jurist":"Jurist","val.compliance":"Compliance officer","val.btn":"Menselijke validatie vastleggen","val.disc":"FlexCare signaleert, structureert en onderbouwt — het neemt geen juridisch besluit.","audit.title":"Auditspoor",
-  "dos.tab":"Dossier","dos.q":"Controleklaar overzicht","dos.title":"Controleklaar dossier — Wijkverpleging · A. Bakker [DEMO]","dos.samenvatting":"Managementsamenvatting: onderbouwing grotendeels compleet, met openstaande punten op gezag en vervanging. FlexCare structureert feiten, normen, bronnen en acties; het oordeel blijft menselijk.","dos.onderbouwd":"Onderbouwd","dos.validatie":"Menselijke validatie","dos.rode":"Rode vlaggen / aandacht","dos.positief":"Positieve signalen","dos.ontbrekend":"Ontbrekende informatie","dos.normen":"Normenkader","dos.bronnen":"Bronlijst","dos.juris":"Jurisprudentie","dos.acties":"Openstaande acties","dos.audit":"Auditspoor","dos.disclaimer":"FlexCare ondersteunt aantoonbare beoordeling en regievoering. FlexCare vervangt geen rechterlijk oordeel, belastingcontrole of juridisch advies.","dos.export":"Exporteren (PDF)","dos.exporttoast":"[DEMO] Dossier-export gegenereerd — auditregel toegevoegd.",
+  "dos.tab":"Dossier","dos.q":"Controleklaar overzicht","dos.title":"Controleklaar dossier — Wijkverpleging · A. Bakker [DEMO]","dos.samenvatting":"Managementsamenvatting: onderbouwing grotendeels compleet, met openstaande punten op gezag en vervanging. FlexCare structureert feiten, normen, bronnen en acties; het oordeel blijft menselijk.","dos.onderbouwd":"Onderbouwd","dos.validatie":"Menselijke validatie","dos.rode":"Rode vlaggen / aandacht","dos.positief":"Positieve signalen","dos.ontbrekend":"Ontbrekende informatie","dos.normen":"Normenkader","dos.bronnen":"Bronlijst","dos.juris":"Jurisprudentie","dos.acties":"Openstaande acties","dos.audit":"Auditspoor","dos.disclaimer":"FlexCare ondersteunt aantoonbare beoordeling en regievoering. FlexCare vervangt geen rechterlijk oordeel, belastingcontrole of juridisch advies.","dos.export":"Exporteren (PDF)","dos.exporttoast":"[DEMO] Dossier-export gegenereerd — auditregel toegevoegd.","au.datum":"Datum/tijd","au.actor":"Actor","au.actie":"Actie","au.onderdeel":"Geraakt onderdeel","au.reden":"Reden","au.vorig":"Vorige status","au.nieuw":"Nieuwe status","au.bron":"Bron","au.bewijs":"Bewijs",
   foot:"Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support.",
   "evi.feit":"Feit","evi.bron":"Bron","evi.url":"Bron-URL","evi.opgehaald":"Opgehaald op","evi.bewijs":"Bewijsstuk","evi.ontbreekt":"Ontbrekende informatie","evi.actie":"Actie","evi.volgtuit":"Volgt uit (regelgeving)",
   "src.opgehaald":"opgehaald op","src.voor":"relevant voor"},
@@ -47,7 +47,7 @@ var UI={
   "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
   "besluit.basis":"What does this choice rest on? — facts, not advice","besluit.reason":"Note on this decision (optional) — recorded in the audit trail",
   "besluit.commit":"Record as decision","val.concept":"Draft conclusion (FlexCare)","val.concept-status":"Draft — not yet validated","val.concl":"Substantiation incomplete (8/10). Open questions on Authority and Substitution. FlexCare structures and substantiates; the judgment is the human's.","val.onz":"Uncertainty: medium — 2 open questions, 1 source changed.","val.kies":"Choose validator role…","val.jurist":"Lawyer","val.compliance":"Compliance officer","val.btn":"Record human validation","val.disc":"FlexCare signals, structures and substantiates — it does not take a legal decision.","audit.title":"Audit trail",
-  "dos.tab":"File","dos.q":"Audit-ready overview","dos.title":"Audit-ready file — Community nursing · A. Bakker [DEMO]","dos.samenvatting":"Management summary: substantiation largely complete, with open points on authority and substitution. FlexCare structures facts, norms, sources and actions; the judgment remains human.","dos.onderbouwd":"Substantiated","dos.validatie":"Human validation","dos.rode":"Red flags / attention","dos.positief":"Positive signals","dos.ontbrekend":"Missing information","dos.normen":"Legal framework","dos.bronnen":"Source list","dos.juris":"Case law","dos.acties":"Open actions","dos.audit":"Audit trail","dos.disclaimer":"FlexCare supports demonstrable assessment and governance. FlexCare does not replace a court judgment, tax audit or legal advice.","dos.export":"Export (PDF)","dos.exporttoast":"[DEMO] File export generated — audit entry added.",
+  "dos.tab":"File","dos.q":"Audit-ready overview","dos.title":"Audit-ready file — Community nursing · A. Bakker [DEMO]","dos.samenvatting":"Management summary: substantiation largely complete, with open points on authority and substitution. FlexCare structures facts, norms, sources and actions; the judgment remains human.","dos.onderbouwd":"Substantiated","dos.validatie":"Human validation","dos.rode":"Red flags / attention","dos.positief":"Positive signals","dos.ontbrekend":"Missing information","dos.normen":"Legal framework","dos.bronnen":"Source list","dos.juris":"Case law","dos.acties":"Open actions","dos.audit":"Audit trail","dos.disclaimer":"FlexCare supports demonstrable assessment and governance. FlexCare does not replace a court judgment, tax audit or legal advice.","dos.export":"Export (PDF)","dos.exporttoast":"[DEMO] File export generated — audit entry added.","au.datum":"Date/time","au.actor":"Actor","au.actie":"Action","au.onderdeel":"Affected item","au.reden":"Reason","au.vorig":"Previous status","au.nieuw":"New status","au.bron":"Source","au.bewijs":"Evidence",
   foot:"Interactive mock-up with demo data — no real file, no legal information. FlexCare · Decision Support.",
   "evi.feit":"Fact","evi.bron":"Source","evi.url":"Source URL","evi.opgehaald":"Retrieved on","evi.bewijs":"Evidence item","evi.ontbreekt":"Missing information","evi.actie":"Action","evi.volgtuit":"Follows from (legislation)",
   "src.opgehaald":"retrieved on","src.voor":"relevant to"}
@@ -153,8 +153,8 @@ var BASIS=[
  {m:"partial",t:{nl:"Onderbouwing: 8/10 onderwerpen — 2 open vragen",en:"Substantiation: 8/10 topics — 2 open questions"}}
 ];
 var AUDIT0=[
- {t:"06-02-2026",a:{nl:"Modelovereenkomst goedgekeurd — P. van Dam",en:"Model agreement approved — P. van Dam"}},
- {t:"28-06-2026",a:{nl:"Herbeoordeling gemarkeerd — Systeem",en:"Re-assessment flagged — System"}}
+ {t:"06-02-2026 10:12",actor:"P. van Dam",actie:{nl:"Document goedgekeurd",en:"Document approved"},onderdeel:{nl:"Modelovereenkomst",en:"Model agreement"},reden:{nl:"Compleet en geldig",en:"Complete and valid"},vorig:{nl:"Ingediend",en:"Submitted"},nieuw:{nl:"Geldig",en:"Valid"},bron:"—",bewijs:{nl:"modelovereenkomst v1",en:"model agreement v1"}},
+ {t:"28-06-2026 03:00",actor:{nl:"Systeem",en:"System"},actie:{nl:"Herbeoordeling gemarkeerd",en:"Re-assessment flagged"},onderdeel:{nl:"Engagement",en:"Engagement"},reden:{nl:"Termijn nadert",en:"Term approaching"},vorig:{nl:"Geldig",en:"Valid"},nieuw:{nl:"Aandacht",en:"Attention"},bron:"—",bewijs:"—"}
 ];
 var T={actie:{nl:"Actie gestart: ",en:"Action started: "},saved:{nl:"Scenario opgeslagen",en:"Scenario saved"},
  copied:{nl:"Scenario gekopieerd naar de velden",en:"Scenario copied to the fields"},
@@ -203,12 +203,13 @@ function renderNav(){
    '<div class="step"><b>'+UI[LANG]["evi.ontbreekt"]+'</b>'+L(r.ontbr)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.controle"]+'</b>'+L(ctrl)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.actie"]+'</b>'+L(r.actie)+'</div></div></td>';
-  function tgl(){var open=det.classList.toggle("show"); tr.setAttribute("aria-expanded",open?"true":"false");}
+  function tgl(){var open=det.classList.toggle("show"); openNav[r.o.nl]=open; tr.setAttribute("aria-expanded",open?"true":"false");}
   tr.addEventListener("click",tgl);
   tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tgl();}});
   $("#navbody").appendChild(tr); $("#navbody").appendChild(det);
   var lk=det.querySelector(".norm-link"); if(lk){lk.addEventListener("click",function(e){e.preventDefault();gotoNorm(lk.dataset.norm);});}
   var lj=det.querySelector(".jur-link"); if(lj){lj.addEventListener("click",function(e){e.preventDefault();gotoJuris(lj.dataset.jur);});}
+  if(openNav[r.o.nl]){det.classList.add("show");tr.setAttribute("aria-expanded","true");}
  });
 }
 function renderSources(){
@@ -227,7 +228,7 @@ function renderMonitor(){
 function createHerbeoordeling(){
  if(!herbCreated){herbCreated=true;
   actExtra.push({t:{nl:"Herbeoordeling nodig — bron ‘Beleidsregels’ gewijzigd",en:"Re-assessment needed — source ‘Policy rules’ changed"},why:{nl:"uit: Bronmonitor → Beleidsregels → Ondernemerschap",en:"from: Source monitor → Policy rules → Entrepreneurship"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Openen",en:"Open"},w:"admin",uitleg:{nl:"proces — bronwijziging vereist hertoetsing",en:"process — source change requires re-check"}});
-  auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Herbeoordeling aangemaakt — bronwijziging Beleidsregels — Systeem":"Re-assessment created — source change Policy rules — System")});
+  auditExtra.push({t:L(T.vandaag),actor:{nl:"Systeem",en:"System"},actie:{nl:"Herbeoordeling aangemaakt",en:"Re-assessment created"},onderdeel:{nl:"Ondernemerschap",en:"Entrepreneurship"},reden:{nl:"Bronwijziging Beleidsregels",en:"Source change Policy rules"},vorig:{nl:"Actueel",en:"Current"},nieuw:{nl:"Herbeoordeling nodig",en:"Re-assessment needed"},bron:{nl:"Beleidsregels",en:"Policy rules"},bewijs:"—"});
  }
  renderActions(); renderAudit(); gotoWorld("w3"); toast(L(T.herb));
 }
@@ -266,14 +267,14 @@ function renderActions(){
 function renderBasis(){
  $("#basis").innerHTML=BASIS.map(function(b){return '<li><span class="mark '+b.m+'">'+(b.m==="yes"?"✓":"◐")+'</span>'+L(b.t)+'</li>';}).join("");
 }
-var auditExtra=[]; var actExtra=[]; var herbCreated=false; var validatedByKey=null;
+var auditExtra=[]; var actExtra=[]; var herbCreated=false; var validatedByKey=null; var openNav={};
 function valRoleName(){return UI[LANG][validatedByKey==="jurist"?"val.jurist":"val.compliance"];}
 function renderValStatus(){var st=$("#val-status");if(!st||!validatedByKey)return;st.textContent=(LANG==="nl"?"Gevalideerd — ":"Validated — ")+valRoleName()+" — "+L(T.vandaag);st.className="badge ok";}
-function renderAudit(){
- $("#audit").innerHTML='<p class="sectiontitle">'+UI[LANG]["audit.title"]+'</p>'+
-  AUDIT0.map(function(e){return '<div class="entry"><span class="t num">'+e.t+'</span>'+L(e.a)+'</div>';}).join("")+
-  auditExtra.map(function(e){return '<div class="entry"><span class="t num">'+e.t+'</span>'+e.a+'</div>';}).join("");
-}
+function allAudits(){return AUDIT0.concat(auditExtra);}
+function auditTable(entries){var cols=['au.datum','au.actor','au.actie','au.onderdeel','au.reden','au.vorig','au.nieuw','au.bron','au.bewijs'];
+ return '<div style="overflow-x:auto;"><table class="audittbl"><thead><tr>'+cols.map(function(k){return '<th>'+UI[LANG][k]+'</th>';}).join('')+'</tr></thead><tbody>'+
+  entries.map(function(e){return '<tr><td class="num">'+e.t+'</td><td>'+L(e.actor)+'</td><td>'+L(e.actie)+'</td><td>'+L(e.onderdeel)+'</td><td>'+L(e.reden)+'</td><td>'+L(e.vorig)+'</td><td>'+L(e.nieuw)+'</td><td>'+L(e.bron)+'</td><td>'+L(e.bewijs)+'</td></tr>';}).join('')+'</tbody></table></div>';}
+function renderAudit(){$("#audit").innerHTML='<p class="sectiontitle">'+UI[LANG]["audit.title"]+'</p>'+auditTable(allAudits());}
 function renderDossier(){
  if(!$("#dossier"))return;
  var rows=navRows();
@@ -294,10 +295,10 @@ function renderDossier(){
   '<h4>'+UI[LANG]["dos.bronnen"]+'</h4>'+li(SOURCES,function(s){return '<li>'+L(s.t)+' — '+(s.url||L(s.houder))+'</li>';})+
   '<h4>'+UI[LANG]["dos.juris"]+'</h4>'+li(JURIS,function(j){return '<li>'+L(j.zaak)+'</li>';})+
   '<h4>'+UI[LANG]["dos.acties"]+'</h4>'+li(acts,function(a){return '<li>'+L(a.t)+' — '+L(a.who)+' <span class="src">('+L(WAARDE[a.w||"admin"])+')</span></li>';})+
-  '<h4>'+UI[LANG]["dos.audit"]+'</h4>'+li(audits,function(e){return '<li><span class="src">'+e.t+'</span> '+e.a+'</li>';})+
+  '<h4>'+UI[LANG]["dos.audit"]+'</h4>'+auditTable(allAudits())+
   '<p class="dos-disc">'+UI[LANG]["dos.disclaimer"]+'</p>';
  $("#dossier").innerHTML=h;
- var ex=$("#dos-export"); if(ex){ex.addEventListener("click",function(){auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Dossier-export gegenereerd — Systeem":"File export generated — System")});renderAudit();renderDossier();toast(UI[LANG]["dos.exporttoast"]);});}
+ var ex=$("#dos-export"); if(ex){ex.addEventListener("click",function(){auditExtra.push({t:L(T.vandaag),actor:{nl:"Systeem",en:"System"},actie:{nl:"Dossier-export gegenereerd",en:"File export generated"},onderdeel:{nl:"Dossier",en:"File"},reden:{nl:"Handmatige export",en:"Manual export"},vorig:"—",nieuw:"—",bron:"—",bewijs:{nl:"PDF-preview",en:"PDF preview"}});renderAudit();renderDossier();toast(UI[LANG]["dos.exporttoast"]);});}
 }
 
 /* ---------- scenario ---------- */
@@ -342,8 +343,8 @@ $$(".opts .opt").forEach(function(o){o.addEventListener("click",function(){press
 var scenCount=0;
 $("#save-scen").addEventListener("click",function(){scenCount++;var name=String.fromCharCode(64+scenCount),v=vals(),c=calc(v);var el=document.createElement("div");el.className="scen";el.innerHTML='<div class="n">Scenario '+name+'</div><div class="t num">'+fmt.format(Math.round(c.total))+' · €'+v.tarief+'/u · '+v.uren+'u · '+v.loop+'m</div><button data-copy>'+(LANG==="nl"?"Kopiëren":"Copy")+'</button>';el.querySelector("[data-copy]").addEventListener("click",function(){$("#tarief").value=v.tarief;$("#uren").value=v.uren;$("#loop").value=v.loop;$("#idx").value=v.idx;recompute();toast(L(T.copied));});$("#saved").appendChild(el);toast(L(T.saved));});
 $("#cmp-scen").addEventListener("click",function(){var n=$$("#saved .scen").length;toast(n<2?L(T.cmp0):L(T.cmp)+" ("+n+")");});
-$("#commit").addEventListener("click",function(){var keuze=$(".opts .opt[aria-pressed='true']").textContent.trim();var reason=$("#reason").value.trim();var valnote=validatedByKey?((LANG==="nl"?" · gevalideerd door ":" · validated by ")+valRoleName()):(LANG==="nl"?" · nog niet menselijk gevalideerd":" · not yet human-validated");auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Besluit vastgelegd: ":"Decision recorded: ")+"<b>"+keuze+"</b> — "+L(T.ondanks)+valnote+(reason?" · “"+reason+"”":"")});renderAudit();$("#reason").value="";toast(L(T.besluit)+"“"+keuze+"”");});
-$("#validate").addEventListener("click",function(){var v=$("#validator").value;if(!v){toast(L(T.valneed));return;}validatedByKey=v;renderValStatus();auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Menselijke validatie vastgelegd — ":"Human validation recorded — ")+valRoleName()});renderAudit();toast(L(T.valdone)+" — "+valRoleName());});
+$("#commit").addEventListener("click",function(){var keuze=$(".opts .opt[aria-pressed='true']").textContent.trim();var reason=$("#reason").value.trim();var valnote=validatedByKey?((LANG==="nl"?" · gevalideerd door ":" · validated by ")+valRoleName()):(LANG==="nl"?" · nog niet menselijk gevalideerd":" · not yet human-validated");auditExtra.push({t:L(T.vandaag),actor:{nl:"Gebruiker",en:"User"},actie:{nl:"Besluit vastgelegd",en:"Decision recorded"},onderdeel:keuze,reden:(reason||(LANG==="nl"?"genomen ondanks open punten":"taken despite open points")),vorig:{nl:"Concept",en:"Draft"},nieuw:keuze,bron:"—",bewijs:(validatedByKey?valRoleName():{nl:"niet gevalideerd",en:"not validated"})});renderAudit();$("#reason").value="";toast(L(T.besluit)+"“"+keuze+"”");});
+$("#validate").addEventListener("click",function(){var v=$("#validator").value;if(!v){toast(L(T.valneed));return;}validatedByKey=v;renderValStatus();auditExtra.push({t:L(T.vandaag),actor:valRoleName(),actie:{nl:"Menselijke validatie",en:"Human validation"},onderdeel:{nl:"Besluit",en:"Decision"},reden:{nl:"Conceptconclusie beoordeeld",en:"Draft conclusion reviewed"},vorig:{nl:"Concept",en:"Draft"},nieuw:{nl:"Gevalideerd",en:"Validated"},bron:"—",bewijs:"—"});renderAudit();toast(L(T.valdone)+" — "+valRoleName());});
 
 recompute();
 setLang("nl");
