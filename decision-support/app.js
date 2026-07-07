@@ -26,7 +26,7 @@ var UI={
   "besluit.basis":"Waarop rust deze keuze? — feiten, geen advies","besluit.reason":"Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor",
   "besluit.commit":"Vastleggen als beslissing","audit.title":"Auditspoor",
   foot:"Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support.",
-  "evi.feit":"Feit","evi.bron":"Bron","evi.url":"Bron-URL","evi.opgehaald":"Opgehaald op","evi.bewijs":"Bewijsstuk","evi.ontbreekt":"Ontbrekende informatie","evi.actie":"Actie",
+  "evi.feit":"Feit","evi.bron":"Bron","evi.url":"Bron-URL","evi.opgehaald":"Opgehaald op","evi.bewijs":"Bewijsstuk","evi.ontbreekt":"Ontbrekende informatie","evi.actie":"Actie","evi.volgtuit":"Volgt uit (regelgeving)",
   "src.opgehaald":"opgehaald op","src.voor":"relevant voor"},
  en:{demo:"Mock-up · demo data","opdracht.title":"Assignment · Community nursing","opdracht.since":"running since Feb 2026",
   perspectief:"Perspective","persp.og":"Client","persp.on":"Contractor","persp.im":"Intermediary","persp.ac":"Accountant","persp.ju":"Lawyer",
@@ -47,7 +47,7 @@ var UI={
   "besluit.basis":"What does this choice rest on? — facts, not advice","besluit.reason":"Note on this decision (optional) — recorded in the audit trail",
   "besluit.commit":"Record as decision","audit.title":"Audit trail",
   foot:"Interactive mock-up with demo data — no real file, no legal information. FlexCare · Decision Support.",
-  "evi.feit":"Fact","evi.bron":"Source","evi.url":"Source URL","evi.opgehaald":"Retrieved on","evi.bewijs":"Evidence item","evi.ontbreekt":"Missing information","evi.actie":"Action",
+  "evi.feit":"Fact","evi.bron":"Source","evi.url":"Source URL","evi.opgehaald":"Retrieved on","evi.bewijs":"Evidence item","evi.ontbreekt":"Missing information","evi.actie":"Action","evi.volgtuit":"Follows from (legislation)",
   "src.opgehaald":"retrieved on","src.voor":"relevant to"}
 };
 
@@ -105,13 +105,16 @@ var MONITOR=[
 var NTYPE={wet:{nl:"Wet",en:"Law"},beleid:{nl:"Beleid",en:"Policy"},juris:{nl:"Jurisprudentie",en:"Case law"},handreiking:{nl:"Handreiking",en:"Guidance"},aankomend:{nl:"Aankomend",en:"Upcoming"}};
 var MSTAT2={actueel:{nl:"actueel",en:"current",b:"ok"},gewijzigd:{nl:"gewijzigd sinds vorige beoordeling",en:"changed since last assessment",b:"open"},controleren:{nl:"opnieuw controleren",en:"re-check",b:"open"},voorbereiding:{nl:"in voorbereiding",en:"in preparation",b:"neutral"}};
 var NORMS=[
- {t:{nl:"Wet DBA — kader arbeidsrelaties",en:"DBA Act — employment-relationship framework"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Kwalificatie arbeidsrelatie",en:"Qualification of the relationship"}},
- {t:{nl:"BW art. 7:610 — arbeidsovereenkomst",en:"Civil Code art. 7:610 — employment contract"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Gezag, inbedding",en:"Authority, embedding"}},
- {t:{nl:"Beleidsregels beoordeling arbeidsrelaties",en:"Policy rules on assessing employment relationships"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",mon:"gewijzigd",ob:{nl:"Handhaving, ondernemerschap",en:"Enforcement, entrepreneurship"}},
- {t:{nl:"Jurisprudentie — holistische weging (o.a. Uber/Deliveroo)",en:"Case law — holistic weighing (e.g. Uber/Deliveroo)"},type:"juris",url:"https://www.rechtspraak.nl",opg:"2 apr 2026",mon:"controleren",ob:{nl:"Gezag, geen rangorde",en:"Authority, no hierarchy"}},
- {t:{nl:"Handreiking Belastingdienst",en:"Belastingdienst guidance"},type:"handreiking",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Praktijktoetsing",en:"Practical assessment"}},
- {t:{nl:"WTTA — wet in voorbereiding",en:"WTTA — legislation in preparation"},type:"aankomend",url:"https://www.rijksoverheid.nl",opg:"6 jul 2026",mon:"voorbereiding",ob:{nl:"Toekomstige impact — monitoren",en:"Future impact — monitor"}}
+ {id:"wetdba",t:{nl:"Wet DBA — kader arbeidsrelaties",en:"DBA Act — employment-relationship framework"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Kwalificatie arbeidsrelatie",en:"Qualification of the relationship"}},
+ {id:"bw610",t:{nl:"BW art. 7:610 — arbeidsovereenkomst",en:"Civil Code art. 7:610 — employment contract"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Gezag, inbedding",en:"Authority, embedding"}},
+ {id:"beleid",t:{nl:"Beleidsregels beoordeling arbeidsrelaties",en:"Policy rules on assessing employment relationships"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",mon:"gewijzigd",ob:{nl:"Handhaving, ondernemerschap",en:"Enforcement, entrepreneurship"}},
+ {id:"juris",t:{nl:"Jurisprudentie — holistische weging (o.a. Uber/Deliveroo)",en:"Case law — holistic weighing (e.g. Uber/Deliveroo)"},type:"juris",url:"https://www.rechtspraak.nl",opg:"2 apr 2026",mon:"controleren",ob:{nl:"Gezag, geen rangorde",en:"Authority, no hierarchy"}},
+ {id:"handreiking",t:{nl:"Handreiking Belastingdienst",en:"Belastingdienst guidance"},type:"handreiking",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Praktijktoetsing",en:"Practical assessment"}},
+ {id:"wtta",t:{nl:"WTTA — wet in voorbereiding",en:"WTTA — legislation in preparation"},type:"aankomend",url:"https://www.rijksoverheid.nl",opg:"6 jul 2026",mon:"voorbereiding",ob:{nl:"Toekomstige impact — monitoren",en:"Future impact — monitor"}}
 ];
+// DEMO-mapping bevinding -> norm (welke regelgeving onderbouwt welk onderwerp). Illustratief.
+var NAVNORM={"Gezag":"juris","Organisatorische inbedding":"bw610","Ondernemerschap":"beleid","Vervanging":"juris","Ondernemersrisico":"juris","Meerdere opdrachtgevers":"beleid","Eigen materialen":"beleid","Contractvorm":"bw610","Duur":"beleid","Exclusiviteit":"juris"};
+function normById(id){for(var i=0;i<NORMS.length;i++){if(NORMS[i].id===id)return NORMS[i];}return null;}
 var ACTIONS=[
  {t:{nl:"Bewijs opvragen: BAV-polis (verlopen)",en:"Request evidence: liability insurance (expired)"},why:{nl:"uit: Ondernemersrisico",en:"from: Business risk"},who:{nl:"aan zelfstandige",en:"to contractor"},btn:{nl:"Verzoek sturen",en:"Send request"}},
  {t:{nl:"Open vraag beantwoorden: vervanging toegestaan?",en:"Answer open question: substitution allowed?"},why:{nl:"uit: Vervanging",en:"from: Substitution"},who:{nl:"aan opdrachtgever",en:"to client"},btn:{nl:"Beantwoorden",en:"Answer"}},
@@ -154,9 +157,12 @@ function renderNav(){
    '<td><span class="badge '+r.aB+'">'+L(r.aT)+'</span></td>';
   var det=document.createElement("tr"); det.className="detail";
   var urlHtml = r.url ? '<a href="'+r.url+'" target="_blank" rel="noopener">'+r.url+'</a> <span class="demo">[DEMO]</span>' : '<span class="src">—</span>';
+  var nrm = NAVNORM[r.o.nl] ? normById(NAVNORM[r.o.nl]) : null;
+  var volgt = nrm ? '<a href="#" class="norm-link" data-norm="'+nrm.id+'">'+L(nrm.t)+' →</a>' : '<span class="src">—</span>';
   det.innerHTML='<td colspan="5"><div class="evi">'+
    '<div class="step"><b>'+UI[LANG]["evi.feit"]+'</b>'+L(r.feit)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.bron"]+'</b>'+L(TYPE[r.type])+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.volgtuit"]+'</b>'+volgt+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.url"]+'</b>'+urlHtml+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.opgehaald"]+'</b>'+r.opg+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.bewijs"]+'</b>'+L(r.bw)+'</div>'+
@@ -166,6 +172,7 @@ function renderNav(){
   tr.addEventListener("click",tgl);
   tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tgl();}});
   $("#navbody").appendChild(tr); $("#navbody").appendChild(det);
+  var lk=det.querySelector(".norm-link"); if(lk){lk.addEventListener("click",function(e){e.preventDefault();gotoNorm(lk.dataset.norm);});}
  });
 }
 function renderSources(){
@@ -184,7 +191,7 @@ function renderNorms(){
  $("#norms").innerHTML=NORMS.map(function(n){
   var url=n.url?'<a href="'+n.url+'" target="_blank" rel="noopener">'+n.url+'</a>':'';
   var ms=MSTAT2[n.mon];
-  return '<div class="srccard"><div class="t">'+L(n.t)+' <span class="badge neutral">'+L(NTYPE[n.type])+'</span> <span class="demo">[DEMO]</span></div>'+
+  return '<div class="srccard" id="norm-'+n.id+'"><div class="t">'+L(n.t)+' <span class="badge neutral">'+L(NTYPE[n.type])+'</span> <span class="demo">[DEMO]</span></div>'+
    '<div class="meta">'+UI[LANG]["wet.onderbouwt"]+': '+L(n.ob)+'</div>'+
    '<div class="row"><span>'+url+'</span><span class="badge '+ms.b+'">'+L(ms)+'</span></div>'+
    '<div class="meta">'+UI[LANG]["src.opgehaald"]+' '+n.opg+'</div></div>';
@@ -223,6 +230,8 @@ function decoupleText(){return werktijd==="og"
 function setWerktijd(w){werktijd=w; pressGroup("#wt-vrij,#wt-og", w==="vrij"?$("#wt-vrij"):$("#wt-og")); renderNav(); renderCockpit(); $("#decouple").innerHTML=decoupleText();}
 
 /* ---------- taal ---------- */
+function gotoWorld(w){$$(".tab").forEach(function(x){x.setAttribute("aria-selected",x.dataset.w===w?"true":"false");});$$(".world").forEach(function(s){s.classList.toggle("active",s.id===w);});}
+function gotoNorm(id){gotoWorld("wwet");var el=$("#norm-"+id);if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("hl");setTimeout(function(){el.classList.remove("hl");},1800);}}
 function updateKlabel(){$("#k-label").textContent=L(LABELS[$("#persp").value]);}
 function setLang(l){
  LANG=l; $("#lang-nl").setAttribute("aria-pressed",l==="nl"?"true":"false"); $("#lang-en").setAttribute("aria-pressed",l==="en"?"true":"false");
