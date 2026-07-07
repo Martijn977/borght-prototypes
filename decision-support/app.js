@@ -20,7 +20,7 @@ var UI={
   "th.onderwerp":"Onderwerp","th.feiten":"Feiten bekend","th.bron":"Bron","th.bewijs":"Bewijs","th.aandacht":"Aandacht",
   "nav.noverdict":"Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.",
   "wet.tab":"Wetgeving","wet.q":"Waar volgt dit uit?","wet.intro":"Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.","wet.norms":"Toepasselijke regelgeving","wet.onderbouwt":"Onderbouwt","jur.tab":"Jurisprudentie","jur.q":"Welke uitspraken raken dit?","jur.intro":"Deze jurisprudentie ondersteunt het beoordelingskader, maar FlexCare neemt geen rechterlijk oordeel over. Geen overclaim — wel herleidbaarheid naar de gezichtspunten.","jur.cases":"Relevante uitspraken en lijnen","jur.principe":"Juridisch principe","jur.gezicht":"Gezichtspunten","jur.impact":"Impact op beoordeling","jur.relfeit":"Relatie met dossierfeit","jur.relnorm":"Relatie met norm","evi.volgtjur":"Volgt uit (jurisprudentie)",
-  "bron.title":"Bronnen","mon.title":"Bronmonitor","mon.demo":"[DEMO] bronmonitoring gesimuleerd — geen echte scraping.",
+  "bron.title":"Bronnen","mon.title":"Bronmonitor","mon.demo":"[DEMO] bronmonitoring gesimuleerd — geen echte scraping.","mon.act":"Herbeoordeling aanmaken",
   "w3.intro":"Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.",
   "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
   "besluit.basis":"Waarop rust deze keuze? — feiten, geen advies","besluit.reason":"Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor",
@@ -41,7 +41,7 @@ var UI={
   "th.onderwerp":"Topic","th.feiten":"Facts known","th.bron":"Source","th.bewijs":"Evidence","th.aandacht":"Attention",
   "nav.noverdict":"No verdict, no score, no “green = safe”. Only: what is known, how it is evidenced, and what is missing.",
   "wet.tab":"Legislation","wet.q":"What does this follow from?","wet.intro":"What the assessment rests on — current law, policy, case law, guidance and upcoming legislation. Every finding follows from an identifiable, monitored source. No verdict, but traceability.","wet.norms":"Applicable legislation","wet.onderbouwt":"Substantiates","jur.tab":"Case law","jur.q":"Which rulings touch this?","jur.intro":"This case law supports the assessment framework, but FlexCare does not take over a court's judgment. No overclaim — but traceability to the viewpoints.","jur.cases":"Relevant rulings and lines","jur.principe":"Legal principle","jur.gezicht":"Viewpoints","jur.impact":"Impact on assessment","jur.relfeit":"Relation to case fact","jur.relnorm":"Relation to norm","evi.volgtjur":"Follows from (case law)",
-  "bron.title":"Sources","mon.title":"Source monitor","mon.demo":"[DEMO] source monitoring simulated — no real scraping.",
+  "bron.title":"Sources","mon.title":"Source monitor","mon.demo":"[DEMO] source monitoring simulated — no real scraping.","mon.act":"Create re-assessment",
   "w3.intro":"Governance: actions, decision and recording. The decision is a consequence, not a separate island.",
   "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
   "besluit.basis":"What does this choice rest on? — facts, not advice","besluit.reason":"Note on this decision (optional) — recorded in the audit trail",
@@ -98,7 +98,7 @@ var SOURCES=[
 ];
 var MONITOR=[
  {c:"new",t:{nl:"Nieuwe bron gevonden — handreiking Belastingdienst",en:"New source found — Belastingdienst guidance"},w:{nl:"vandaag",en:"today"}},
- {c:"chg",t:{nl:"Bron gewijzigd sinds vorige beoordeling — wetten.overheid.nl",en:"Source changed since last assessment — wetten.overheid.nl"},w:{nl:"2 dgn",en:"2 days"}},
+ {c:"chg",t:{nl:"Bron gewijzigd sinds vorige beoordeling — Beleidsregels (Belastingdienst)",en:"Source changed since last assessment — Policy rules (Belastingdienst)"},w:{nl:"2 dgn",en:"2 days"},act:true},
  {c:"err",t:{nl:"Bron tijdelijk niet bereikbaar — rechtspraak.nl",en:"Source temporarily unreachable — rechtspraak.nl"},w:{nl:"1 dg",en:"1 day"}},
  {c:"chk",t:{nl:"Hercontrole nodig — jurisprudentie ouder dan 90 dagen",en:"Re-check needed — case law older than 90 days"},w:{nl:"—",en:"—"}}
 ];
@@ -142,7 +142,7 @@ var T={actie:{nl:"Actie gestart: ",en:"Action started: "},saved:{nl:"Scenario op
  copied:{nl:"Scenario gekopieerd naar de velden",en:"Scenario copied to the fields"},
  cmp0:{nl:"Sla eerst twee scenario's op om te vergelijken",en:"Save two scenarios first to compare"},
  cmp:{nl:"Vergelijking (mock)",en:"Comparison (mock)"},
- besluit:{nl:"Beslissing vastgelegd in het auditspoor: ",en:"Decision recorded in the audit trail: "},vandaag:{nl:"vandaag",en:"today"},ondanks:{nl:"genomen ondanks 2 open vragen",en:"taken despite 2 open questions"}};
+ besluit:{nl:"Beslissing vastgelegd in het auditspoor: ",en:"Decision recorded in the audit trail: "},vandaag:{nl:"vandaag",en:"today"},ondanks:{nl:"genomen ondanks 2 open vragen",en:"taken despite 2 open questions"},herb:{nl:"Herbeoordeling aangemaakt — gekoppeld aan bronwijziging",en:"Re-assessment created — linked to source change"}};
 
 /* ---------- render ---------- */
 function applyStatic(){
@@ -197,7 +197,15 @@ function renderSources(){
  }).join("");
 }
 function renderMonitor(){
- $("#monitor").innerHTML=MONITOR.map(function(m){return '<div class="mon '+m.c+'"><span class="ic"></span><span>'+L(m.t)+'</span><span class="when">'+L(m.w)+'</span></div>';}).join("");
+ $("#monitor").innerHTML=MONITOR.map(function(m,i){var b=m.act?' <button class="btn ghost mon-act" data-i="'+i+'">'+UI[LANG]["mon.act"]+'</button>':'';return '<div class="mon '+m.c+'"><span class="ic"></span><span>'+L(m.t)+b+'</span><span class="when">'+L(m.w)+'</span></div>';}).join("");
+ $$("#monitor .mon-act").forEach(function(btn){btn.addEventListener("click",createHerbeoordeling);});
+}
+function createHerbeoordeling(){
+ if(!herbCreated){herbCreated=true;
+  actExtra.push({t:{nl:"Herbeoordeling nodig — bron ‘Beleidsregels’ gewijzigd",en:"Re-assessment needed — source ‘Policy rules’ changed"},why:{nl:"uit: Bronmonitor → Beleidsregels → Ondernemerschap",en:"from: Source monitor → Policy rules → Entrepreneurship"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Openen",en:"Open"}});
+  auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Herbeoordeling aangemaakt — bronwijziging Beleidsregels — Systeem":"Re-assessment created — source change Policy rules — System")});
+ }
+ renderActions(); renderAudit(); gotoWorld("w3"); toast(L(T.herb));
 }
 function renderNorms(){
  $("#norms").innerHTML=NORMS.map(function(n){
@@ -223,7 +231,7 @@ function renderJuris(){
 }
 function renderActions(){
  $("#actions").innerHTML="";
- ACTIONS.forEach(function(a){
+ ACTIONS.concat(actExtra).forEach(function(a){
   var d=document.createElement("div"); d.className="action";
   d.innerHTML='<div><div>'+L(a.t)+'</div><div class="why">'+L(a.why)+'</div></div><span class="who">'+L(a.who)+'</span><button class="btn ghost">'+L(a.btn)+'</button>';
   d.querySelector("button").addEventListener("click",function(){toast(L(T.actie)+L(a.t));});
@@ -233,7 +241,7 @@ function renderActions(){
 function renderBasis(){
  $("#basis").innerHTML=BASIS.map(function(b){return '<li><span class="mark '+b.m+'">'+(b.m==="yes"?"✓":"◐")+'</span>'+L(b.t)+'</li>';}).join("");
 }
-var auditExtra=[];
+var auditExtra=[]; var actExtra=[]; var herbCreated=false;
 function renderAudit(){
  $("#audit").innerHTML='<p class="sectiontitle">'+UI[LANG]["audit.title"]+'</p>'+
   AUDIT0.map(function(e){return '<div class="entry"><span class="t num">'+e.t+'</span>'+L(e.a)+'</div>';}).join("")+
