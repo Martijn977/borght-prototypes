@@ -138,10 +138,13 @@ var JURIS=[
 ];
 var JURLINK={"Gezag":"deliveroo","Organisatorische inbedding":"uber","Ondernemerschap":"deliveroo","Vervanging":"gezichtspunten","Ondernemersrisico":"deliveroo","Contractvorm":"gezichtspunten","Exclusiviteit":"deliveroo"};
 function jurById(id){for(var i=0;i<JURIS.length;i++){if(JURIS[i].id===id)return JURIS[i];}return null;}
+var WAARDE={hoog:{nl:"Feitelijke risicoreductie",en:"Actual risk reduction",b:"ok"},laag:{nl:"Papieren schijnoplossing",en:"Paper-only measure",b:"miss"},admin:{nl:"Onderbouwing / administratief",en:"Substantiation / administrative",b:"neutral"}};
 var ACTIONS=[
- {t:{nl:"Bewijs opvragen: BAV-polis (verlopen)",en:"Request evidence: liability insurance (expired)"},why:{nl:"uit: Ondernemersrisico",en:"from: Business risk"},who:{nl:"aan zelfstandige",en:"to contractor"},btn:{nl:"Verzoek sturen",en:"Send request"}},
- {t:{nl:"Open vraag beantwoorden: vervanging toegestaan?",en:"Answer open question: substitution allowed?"},why:{nl:"uit: Vervanging",en:"from: Substitution"},who:{nl:"aan opdrachtgever",en:"to client"},btn:{nl:"Beantwoorden",en:"Answer"}},
- {t:{nl:"Herbeoordeling inplannen (termijn verlopen)",en:"Schedule re-assessment (term expired)"},why:{nl:"uit: broncheck",en:"from: source check"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Inplannen",en:"Schedule"}}
+ {t:{nl:"Feitelijke werkwijze aanpassen: vrije werktijden & vervanging in de praktijk",en:"Adjust actual practice: free working hours & substitution"},why:{nl:"uit: Gezag / Vervanging",en:"from: Authority / Substitution"},who:{nl:"aan opdrachtgever",en:"to client"},btn:{nl:"Openen",en:"Open"},w:"hoog",uitleg:{nl:"wijzigt de feitelijke aansturing/zelfstandigheid — raakt de kwalificatie echt",en:"changes actual direction/independence — genuinely affects qualification"}},
+ {t:{nl:"Modelovereenkomst herzien (alleen tekst)",en:"Revise model agreement (text only)"},why:{nl:"uit: Contractvorm",en:"from: Contract form"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Openen",en:"Open"},w:"laag",uitleg:{nl:"contract aanpassen zonder de feitelijke werkwijze te wijzigen verlaagt het risico niet",en:"changing the contract without changing practice does not reduce risk"}},
+ {t:{nl:"Bewijs opvragen: BAV-polis (verlopen)",en:"Request evidence: liability insurance (expired)"},why:{nl:"uit: Ondernemersrisico",en:"from: Business risk"},who:{nl:"aan zelfstandige",en:"to contractor"},btn:{nl:"Verzoek sturen",en:"Send request"},w:"admin",uitleg:{nl:"verhoogt de herleidbaarheid, verlaagt het feitelijke risico niet",en:"improves traceability, does not reduce actual risk"}},
+ {t:{nl:"Open vraag beantwoorden: vervanging toegestaan?",en:"Answer open question: substitution allowed?"},why:{nl:"uit: Vervanging",en:"from: Substitution"},who:{nl:"aan opdrachtgever",en:"to client"},btn:{nl:"Beantwoorden",en:"Answer"},w:"admin",uitleg:{nl:"brengt het feit in beeld; feitelijke wijziging is de echte maatregel",en:"clarifies the fact; the actual change is the real measure"}},
+ {t:{nl:"Herbeoordeling inplannen (termijn verlopen)",en:"Schedule re-assessment (term expired)"},why:{nl:"uit: broncheck",en:"from: source check"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Inplannen",en:"Schedule"},w:"admin",uitleg:{nl:"proces/regie — houdt de beoordeling actueel",en:"process/governance — keeps the assessment current"}}
 ];
 var BASIS=[
  {m:"yes",t:{nl:"Alle relevante feiten bekend",en:"All relevant facts known"}},
@@ -223,7 +226,7 @@ function renderMonitor(){
 }
 function createHerbeoordeling(){
  if(!herbCreated){herbCreated=true;
-  actExtra.push({t:{nl:"Herbeoordeling nodig — bron ‘Beleidsregels’ gewijzigd",en:"Re-assessment needed — source ‘Policy rules’ changed"},why:{nl:"uit: Bronmonitor → Beleidsregels → Ondernemerschap",en:"from: Source monitor → Policy rules → Entrepreneurship"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Openen",en:"Open"}});
+  actExtra.push({t:{nl:"Herbeoordeling nodig — bron ‘Beleidsregels’ gewijzigd",en:"Re-assessment needed — source ‘Policy rules’ changed"},why:{nl:"uit: Bronmonitor → Beleidsregels → Ondernemerschap",en:"from: Source monitor → Policy rules → Entrepreneurship"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Openen",en:"Open"},w:"admin",uitleg:{nl:"proces — bronwijziging vereist hertoetsing",en:"process — source change requires re-check"}});
   auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Herbeoordeling aangemaakt — bronwijziging Beleidsregels — Systeem":"Re-assessment created — source change Policy rules — System")});
  }
  renderActions(); renderAudit(); gotoWorld("w3"); toast(L(T.herb));
@@ -254,7 +257,8 @@ function renderActions(){
  $("#actions").innerHTML="";
  ACTIONS.concat(actExtra).forEach(function(a){
   var d=document.createElement("div"); d.className="action";
-  d.innerHTML='<div><div>'+L(a.t)+'</div><div class="why">'+L(a.why)+'</div></div><span class="who">'+L(a.who)+'</span><button class="btn ghost">'+L(a.btn)+'</button>';
+  var wv=WAARDE[a.w||"admin"];
+  d.innerHTML='<div><div>'+L(a.t)+' <span class="badge '+wv.b+'">'+L(wv)+'</span></div><div class="why">'+L(a.why)+(a.uitleg?' · '+L(a.uitleg):'')+'</div></div><span class="who">'+L(a.who)+'</span><button class="btn ghost">'+L(a.btn)+'</button>';
   d.querySelector("button").addEventListener("click",function(){toast(L(T.actie)+L(a.t));});
   $("#actions").appendChild(d);
  });
@@ -289,7 +293,7 @@ function renderDossier(){
   '<h4>'+UI[LANG]["dos.normen"]+'</h4>'+li(NORMS,function(n){return '<li>'+L(n.t)+' ('+L(NTYPE[n.type])+') <span class="demo">[DEMO]</span></li>';})+
   '<h4>'+UI[LANG]["dos.bronnen"]+'</h4>'+li(SOURCES,function(s){return '<li>'+L(s.t)+' — '+(s.url||L(s.houder))+'</li>';})+
   '<h4>'+UI[LANG]["dos.juris"]+'</h4>'+li(JURIS,function(j){return '<li>'+L(j.zaak)+'</li>';})+
-  '<h4>'+UI[LANG]["dos.acties"]+'</h4>'+li(acts,function(a){return '<li>'+L(a.t)+' — '+L(a.who)+'</li>';})+
+  '<h4>'+UI[LANG]["dos.acties"]+'</h4>'+li(acts,function(a){return '<li>'+L(a.t)+' — '+L(a.who)+' <span class="src">('+L(WAARDE[a.w||"admin"])+')</span></li>';})+
   '<h4>'+UI[LANG]["dos.audit"]+'</h4>'+li(audits,function(e){return '<li><span class="src">'+e.t+'</span> '+e.a+'</li>';})+
   '<p class="dos-disc">'+UI[LANG]["dos.disclaimer"]+'</p>';
  $("#dossier").innerHTML=h;
