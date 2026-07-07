@@ -24,7 +24,7 @@ var UI={
   "w3.intro":"Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.",
   "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
   "besluit.basis":"Waarop rust deze keuze? — feiten, geen advies","besluit.reason":"Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor",
-  "besluit.commit":"Vastleggen als beslissing","audit.title":"Auditspoor",
+  "besluit.commit":"Vastleggen als beslissing","val.concept":"Conceptconclusie (FlexCare)","val.concept-status":"Concept — nog niet gevalideerd","val.concl":"Onderbouwing onvolledig (8/10). Open vragen op Gezag en Vervanging. FlexCare structureert en onderbouwt; het oordeel is aan de mens.","val.onz":"Onzekerheid: middel — 2 open vragen, 1 bron gewijzigd.","val.kies":"Kies validatorrol…","val.jurist":"Jurist","val.compliance":"Compliance officer","val.btn":"Menselijke validatie vastleggen","val.disc":"FlexCare signaleert, structureert en onderbouwt — het neemt geen juridisch besluit.","audit.title":"Auditspoor",
   foot:"Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support.",
   "evi.feit":"Feit","evi.bron":"Bron","evi.url":"Bron-URL","evi.opgehaald":"Opgehaald op","evi.bewijs":"Bewijsstuk","evi.ontbreekt":"Ontbrekende informatie","evi.actie":"Actie","evi.volgtuit":"Volgt uit (regelgeving)",
   "src.opgehaald":"opgehaald op","src.voor":"relevant voor"},
@@ -45,7 +45,7 @@ var UI={
   "w3.intro":"Governance: actions, decision and recording. The decision is a consequence, not a separate island.",
   "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
   "besluit.basis":"What does this choice rest on? — facts, not advice","besluit.reason":"Note on this decision (optional) — recorded in the audit trail",
-  "besluit.commit":"Record as decision","audit.title":"Audit trail",
+  "besluit.commit":"Record as decision","val.concept":"Draft conclusion (FlexCare)","val.concept-status":"Draft — not yet validated","val.concl":"Substantiation incomplete (8/10). Open questions on Authority and Substitution. FlexCare structures and substantiates; the judgment is the human's.","val.onz":"Uncertainty: medium — 2 open questions, 1 source changed.","val.kies":"Choose validator role…","val.jurist":"Lawyer","val.compliance":"Compliance officer","val.btn":"Record human validation","val.disc":"FlexCare signals, structures and substantiates — it does not take a legal decision.","audit.title":"Audit trail",
   foot:"Interactive mock-up with demo data — no real file, no legal information. FlexCare · Decision Support.",
   "evi.feit":"Fact","evi.bron":"Source","evi.url":"Source URL","evi.opgehaald":"Retrieved on","evi.bewijs":"Evidence item","evi.ontbreekt":"Missing information","evi.actie":"Action","evi.volgtuit":"Follows from (legislation)",
   "src.opgehaald":"retrieved on","src.voor":"relevant to"}
@@ -155,7 +155,7 @@ var T={actie:{nl:"Actie gestart: ",en:"Action started: "},saved:{nl:"Scenario op
  copied:{nl:"Scenario gekopieerd naar de velden",en:"Scenario copied to the fields"},
  cmp0:{nl:"Sla eerst twee scenario's op om te vergelijken",en:"Save two scenarios first to compare"},
  cmp:{nl:"Vergelijking (mock)",en:"Comparison (mock)"},
- besluit:{nl:"Beslissing vastgelegd in het auditspoor: ",en:"Decision recorded in the audit trail: "},vandaag:{nl:"vandaag",en:"today"},ondanks:{nl:"genomen ondanks 2 open vragen",en:"taken despite 2 open questions"},herb:{nl:"Herbeoordeling aangemaakt — gekoppeld aan bronwijziging",en:"Re-assessment created — linked to source change"}};
+ besluit:{nl:"Beslissing vastgelegd in het auditspoor: ",en:"Decision recorded in the audit trail: "},vandaag:{nl:"vandaag",en:"today"},ondanks:{nl:"genomen ondanks 2 open vragen",en:"taken despite 2 open questions"},herb:{nl:"Herbeoordeling aangemaakt — gekoppeld aan bronwijziging",en:"Re-assessment created — linked to source change"},valneed:{nl:"Kies eerst een validatorrol",en:"Choose a validator role first"},valdone:{nl:"Menselijke validatie vastgelegd",en:"Human validation recorded"}};
 
 /* ---------- render ---------- */
 function applyStatic(){
@@ -260,7 +260,9 @@ function renderActions(){
 function renderBasis(){
  $("#basis").innerHTML=BASIS.map(function(b){return '<li><span class="mark '+b.m+'">'+(b.m==="yes"?"✓":"◐")+'</span>'+L(b.t)+'</li>';}).join("");
 }
-var auditExtra=[]; var actExtra=[]; var herbCreated=false;
+var auditExtra=[]; var actExtra=[]; var herbCreated=false; var validatedByKey=null;
+function valRoleName(){return UI[LANG][validatedByKey==="jurist"?"val.jurist":"val.compliance"];}
+function renderValStatus(){var st=$("#val-status");if(!st||!validatedByKey)return;st.textContent=(LANG==="nl"?"Gevalideerd — ":"Validated — ")+valRoleName()+" — "+L(T.vandaag);st.className="badge ok";}
 function renderAudit(){
  $("#audit").innerHTML='<p class="sectiontitle">'+UI[LANG]["audit.title"]+'</p>'+
   AUDIT0.map(function(e){return '<div class="entry"><span class="t num">'+e.t+'</span>'+L(e.a)+'</div>';}).join("")+
@@ -288,7 +290,7 @@ function updateKlabel(){$("#k-label").textContent=L(LABELS[$("#persp").value]);}
 function setLang(l){
  LANG=l; $("#lang-nl").setAttribute("aria-pressed",l==="nl"?"true":"false"); $("#lang-en").setAttribute("aria-pressed",l==="en"?"true":"false");
  applyStatic(); updateKlabel();
- renderCockpit(); renderNorms(); renderJuris(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit();
+ renderCockpit(); renderNorms(); renderJuris(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit(); renderValStatus();
  $("#decouple").innerHTML=decoupleText();
 }
 
@@ -309,7 +311,8 @@ $$(".opts .opt").forEach(function(o){o.addEventListener("click",function(){press
 var scenCount=0;
 $("#save-scen").addEventListener("click",function(){scenCount++;var name=String.fromCharCode(64+scenCount),v=vals(),c=calc(v);var el=document.createElement("div");el.className="scen";el.innerHTML='<div class="n">Scenario '+name+'</div><div class="t num">'+fmt.format(Math.round(c.total))+' · €'+v.tarief+'/u · '+v.uren+'u · '+v.loop+'m</div><button data-copy>'+(LANG==="nl"?"Kopiëren":"Copy")+'</button>';el.querySelector("[data-copy]").addEventListener("click",function(){$("#tarief").value=v.tarief;$("#uren").value=v.uren;$("#loop").value=v.loop;$("#idx").value=v.idx;recompute();toast(L(T.copied));});$("#saved").appendChild(el);toast(L(T.saved));});
 $("#cmp-scen").addEventListener("click",function(){var n=$$("#saved .scen").length;toast(n<2?L(T.cmp0):L(T.cmp)+" ("+n+")");});
-$("#commit").addEventListener("click",function(){var keuze=$(".opts .opt[aria-pressed='true']").textContent.trim();var reason=$("#reason").value.trim();auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Besluit vastgelegd: ":"Decision recorded: ")+"<b>"+keuze+"</b> — "+L(T.ondanks)+(reason?" · “"+reason+"”":"")});renderAudit();$("#reason").value="";toast(L(T.besluit)+"“"+keuze+"”");});
+$("#commit").addEventListener("click",function(){var keuze=$(".opts .opt[aria-pressed='true']").textContent.trim();var reason=$("#reason").value.trim();var valnote=validatedByKey?((LANG==="nl"?" · gevalideerd door ":" · validated by ")+valRoleName()):(LANG==="nl"?" · nog niet menselijk gevalideerd":" · not yet human-validated");auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Besluit vastgelegd: ":"Decision recorded: ")+"<b>"+keuze+"</b> — "+L(T.ondanks)+valnote+(reason?" · “"+reason+"”":"")});renderAudit();$("#reason").value="";toast(L(T.besluit)+"“"+keuze+"”");});
+$("#validate").addEventListener("click",function(){var v=$("#validator").value;if(!v){toast(L(T.valneed));return;}validatedByKey=v;renderValStatus();auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Menselijke validatie vastgelegd — ":"Human validation recorded — ")+valRoleName()});renderAudit();toast(L(T.valdone)+" — "+valRoleName());});
 
 recompute();
 setLang("nl");

@@ -158,6 +158,23 @@
       </div>
       <div class="card decision">
         <h3 data-i18n="besluit.title">Besluit — waarop rust mijn keuze?</h3>
+        <div class="valblock">
+          <div class="val-row">
+            <span class="lbl" data-i18n="val.concept">Conceptconclusie (FlexCare)</span>
+            <span class="badge open" id="val-status" data-i18n="val.concept-status">Concept — nog niet gevalideerd</span>
+          </div>
+          <p class="val-concl" data-i18n="val.concl">Onderbouwing onvolledig (8/10). Open vragen op Gezag en Vervanging. FlexCare structureert en onderbouwt; het oordeel is aan de mens.</p>
+          <p class="val-onz" data-i18n="val.onz">Onzekerheid: middel — 2 open vragen, 1 bron gewijzigd.</p>
+          <div class="val-ctl">
+            <select id="validator" aria-label="Validatorrol">
+              <option value="" data-i18n="val.kies">Kies validatorrol…</option>
+              <option value="jurist" data-i18n="val.jurist">Jurist</option>
+              <option value="compliance" data-i18n="val.compliance">Compliance officer</option>
+            </select>
+            <button class="btn" id="validate" data-i18n="val.btn">Menselijke validatie vastleggen</button>
+          </div>
+          <p class="val-disc" data-i18n="val.disc">FlexCare signaleert, structureert en onderbouwt — het neemt geen juridisch besluit.</p>
+        </div>
         <div class="opts" role="group">
           <button class="opt" aria-pressed="true" data-i18n="opt.verlengen">Verlengen</button>
           <button class="opt" aria-pressed="false" data-i18n="opt.beeindigen">Beëindigen</button>
