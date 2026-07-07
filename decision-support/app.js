@@ -19,7 +19,7 @@ var UI={
   "nav.hint":"Klik een onderwerp voor “Waar blijkt dit uit?” — feit, bron, URL, opgehaald op, bewijs, actie.",
   "th.onderwerp":"Onderwerp","th.feiten":"Feiten bekend","th.bron":"Bron","th.bewijs":"Bewijs","th.aandacht":"Aandacht",
   "nav.noverdict":"Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.",
-  "wet.tab":"Wetgeving","wet.q":"Waar volgt dit uit?","wet.intro":"Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.","wet.norms":"Toepasselijke regelgeving","wet.onderbouwt":"Onderbouwt",
+  "wet.tab":"Wetgeving","wet.q":"Waar volgt dit uit?","wet.intro":"Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.","wet.norms":"Toepasselijke regelgeving","wet.onderbouwt":"Onderbouwt","jur.tab":"Jurisprudentie","jur.q":"Welke uitspraken raken dit?","jur.intro":"Deze jurisprudentie ondersteunt het beoordelingskader, maar FlexCare neemt geen rechterlijk oordeel over. Geen overclaim — wel herleidbaarheid naar de gezichtspunten.","jur.cases":"Relevante uitspraken en lijnen","jur.principe":"Juridisch principe","jur.gezicht":"Gezichtspunten","jur.impact":"Impact op beoordeling","jur.relfeit":"Relatie met dossierfeit","jur.relnorm":"Relatie met norm","evi.volgtjur":"Volgt uit (jurisprudentie)",
   "bron.title":"Bronnen","mon.title":"Bronmonitor","mon.demo":"[DEMO] bronmonitoring gesimuleerd — geen echte scraping.",
   "w3.intro":"Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.",
   "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
@@ -40,7 +40,7 @@ var UI={
   "nav.hint":"Click a topic for “How is this evidenced?” — fact, source, URL, retrieved on, evidence, action.",
   "th.onderwerp":"Topic","th.feiten":"Facts known","th.bron":"Source","th.bewijs":"Evidence","th.aandacht":"Attention",
   "nav.noverdict":"No verdict, no score, no “green = safe”. Only: what is known, how it is evidenced, and what is missing.",
-  "wet.tab":"Legislation","wet.q":"What does this follow from?","wet.intro":"What the assessment rests on — current law, policy, case law, guidance and upcoming legislation. Every finding follows from an identifiable, monitored source. No verdict, but traceability.","wet.norms":"Applicable legislation","wet.onderbouwt":"Substantiates",
+  "wet.tab":"Legislation","wet.q":"What does this follow from?","wet.intro":"What the assessment rests on — current law, policy, case law, guidance and upcoming legislation. Every finding follows from an identifiable, monitored source. No verdict, but traceability.","wet.norms":"Applicable legislation","wet.onderbouwt":"Substantiates","jur.tab":"Case law","jur.q":"Which rulings touch this?","jur.intro":"This case law supports the assessment framework, but FlexCare does not take over a court's judgment. No overclaim — but traceability to the viewpoints.","jur.cases":"Relevant rulings and lines","jur.principe":"Legal principle","jur.gezicht":"Viewpoints","jur.impact":"Impact on assessment","jur.relfeit":"Relation to case fact","jur.relnorm":"Relation to norm","evi.volgtjur":"Follows from (case law)",
   "bron.title":"Sources","mon.title":"Source monitor","mon.demo":"[DEMO] source monitoring simulated — no real scraping.",
   "w3.intro":"Governance: actions, decision and recording. The decision is a consequence, not a separate island.",
   "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
@@ -115,6 +115,14 @@ var NORMS=[
 // DEMO-mapping bevinding -> norm (welke regelgeving onderbouwt welk onderwerp). Illustratief.
 var NAVNORM={"Gezag":"juris","Organisatorische inbedding":"bw610","Ondernemerschap":"beleid","Vervanging":"juris","Ondernemersrisico":"juris","Meerdere opdrachtgevers":"beleid","Eigen materialen":"beleid","Contractvorm":"bw610","Duur":"beleid","Exclusiviteit":"juris"};
 function normById(id){for(var i=0;i<NORMS.length;i++){if(NORMS[i].id===id)return NORMS[i];}return null;}
+var JSTAT={leidend:{nl:"leidend",en:"leading",b:"ok"},controleren:{nl:"opnieuw controleren",en:"re-check",b:"open"}};
+var JURIS=[
+ {id:"deliveroo",zaak:{nl:"Deliveroo-lijn (Hoge Raad, 2023)",en:"Deliveroo line (Supreme Court, 2023)"},principe:{nl:"Holistische weging van alle omstandigheden; gezichtspunten zonder vaste rangorde.",en:"Holistic weighing of all circumstances; viewpoints without fixed hierarchy."},gezicht:{nl:"aard werk · beloning · ondernemerschap · organisatorische inbedding",en:"nature of work · pay · entrepreneurship · organisational embedding"},impact:{nl:"Bepaalt hoe gezag en zelfstandigheid worden gewogen.",en:"Determines how authority and independence are weighed."},feit:{nl:"Werktijden, aansturing, inbedding",en:"Working hours, direction, embedding"},norm:"juris",url:"https://www.rechtspraak.nl",datum:"2 apr 2026",status:"leidend"},
+ {id:"gezichtspunten",zaak:{nl:"Gezichtspuntenbenadering",en:"Viewpoint approach"},principe:{nl:"Kwalificatie o.b.v. feitelijke gezichtspunten, niet de bedoeling van partijen.",en:"Qualification based on factual viewpoints, not the parties' intention."},gezicht:{nl:"feitelijke uitvoering boven contract",en:"actual performance over contract"},impact:{nl:"Papieren afspraken wegen minder dan de praktijk.",en:"Paper agreements weigh less than practice."},feit:{nl:"Contractvorm vs feitelijke werkwijze",en:"Contract form vs actual practice"},norm:"bw610",url:"https://www.rechtspraak.nl",datum:"2 apr 2026",status:"leidend"},
+ {id:"uber",zaak:{nl:"Uber-lijn (Gerechtshof, 2021)",en:"Uber line (Court of Appeal, 2021)"},principe:{nl:"Platformaansturing en inbedding kunnen op gezag wijzen.",en:"Platform direction and embedding may indicate authority."},gezicht:{nl:"algoritmische aansturing · inbedding",en:"algorithmic direction · embedding"},impact:{nl:"Aansturing via systeem telt mee voor gezag.",en:"System-based direction counts toward authority."},feit:{nl:"Aansturing, toezicht",en:"Direction, supervision"},norm:"juris",url:"https://www.rechtspraak.nl",datum:"2 apr 2026",status:"controleren"}
+];
+var JURLINK={"Gezag":"deliveroo","Organisatorische inbedding":"uber","Ondernemerschap":"deliveroo","Vervanging":"gezichtspunten","Ondernemersrisico":"deliveroo","Contractvorm":"gezichtspunten","Exclusiviteit":"deliveroo"};
+function jurById(id){for(var i=0;i<JURIS.length;i++){if(JURIS[i].id===id)return JURIS[i];}return null;}
 var ACTIONS=[
  {t:{nl:"Bewijs opvragen: BAV-polis (verlopen)",en:"Request evidence: liability insurance (expired)"},why:{nl:"uit: Ondernemersrisico",en:"from: Business risk"},who:{nl:"aan zelfstandige",en:"to contractor"},btn:{nl:"Verzoek sturen",en:"Send request"}},
  {t:{nl:"Open vraag beantwoorden: vervanging toegestaan?",en:"Answer open question: substitution allowed?"},why:{nl:"uit: Vervanging",en:"from: Substitution"},who:{nl:"aan opdrachtgever",en:"to client"},btn:{nl:"Beantwoorden",en:"Answer"}},
@@ -159,10 +167,13 @@ function renderNav(){
   var urlHtml = r.url ? '<a href="'+r.url+'" target="_blank" rel="noopener">'+r.url+'</a> <span class="demo">[DEMO]</span>' : '<span class="src">—</span>';
   var nrm = NAVNORM[r.o.nl] ? normById(NAVNORM[r.o.nl]) : null;
   var volgt = nrm ? '<a href="#" class="norm-link" data-norm="'+nrm.id+'">'+L(nrm.t)+' →</a>' : '<span class="src">—</span>';
+  var jr = JURLINK[r.o.nl] ? jurById(JURLINK[r.o.nl]) : null;
+  var volgtj = jr ? '<a href="#" class="jur-link" data-jur="'+jr.id+'">'+L(jr.zaak)+' →</a>' : '<span class="src">—</span>';
   det.innerHTML='<td colspan="5"><div class="evi">'+
    '<div class="step"><b>'+UI[LANG]["evi.feit"]+'</b>'+L(r.feit)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.bron"]+'</b>'+L(TYPE[r.type])+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.volgtuit"]+'</b>'+volgt+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.volgtjur"]+'</b>'+volgtj+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.url"]+'</b>'+urlHtml+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.opgehaald"]+'</b>'+r.opg+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.bewijs"]+'</b>'+L(r.bw)+'</div>'+
@@ -173,6 +184,7 @@ function renderNav(){
   tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tgl();}});
   $("#navbody").appendChild(tr); $("#navbody").appendChild(det);
   var lk=det.querySelector(".norm-link"); if(lk){lk.addEventListener("click",function(e){e.preventDefault();gotoNorm(lk.dataset.norm);});}
+  var lj=det.querySelector(".jur-link"); if(lj){lj.addEventListener("click",function(e){e.preventDefault();gotoJuris(lj.dataset.jur);});}
  });
 }
 function renderSources(){
@@ -196,6 +208,18 @@ function renderNorms(){
    '<div class="row"><span>'+url+'</span><span class="badge '+ms.b+'">'+L(ms)+'</span></div>'+
    '<div class="meta">'+UI[LANG]["src.opgehaald"]+' '+n.opg+'</div></div>';
  }).join("");
+}
+function renderJuris(){
+ $("#juris").innerHTML=JURIS.map(function(j){
+  var st=JSTAT[j.status];var nrm=normById(j.norm);
+  return '<div class="srccard" id="jur-'+j.id+'"><div class="t">'+L(j.zaak)+' <span class="badge '+st.b+'">'+L(st)+'</span> <span class="demo">[DEMO]</span></div>'+
+   '<div class="meta"><b>'+UI[LANG]["jur.principe"]+':</b> '+L(j.principe)+'</div>'+
+   '<div class="meta"><b>'+UI[LANG]["jur.gezicht"]+':</b> '+L(j.gezicht)+'</div>'+
+   '<div class="meta"><b>'+UI[LANG]["jur.impact"]+':</b> '+L(j.impact)+'</div>'+
+   '<div class="meta"><b>'+UI[LANG]["jur.relfeit"]+':</b> '+L(j.feit)+' · <b>'+UI[LANG]["jur.relnorm"]+':</b> <a href="#" class="norm-link2" data-norm="'+j.norm+'">'+L(nrm.t)+' →</a></div>'+
+   '<div class="row"><span><a href="'+j.url+'" target="_blank" rel="noopener">'+j.url+'</a> <span class="demo">[DEMO]</span></span><span class="src">'+UI[LANG]["src.opgehaald"]+' '+j.datum+'</span></div></div>';
+ }).join("");
+ $$("#juris .norm-link2").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();gotoNorm(a.dataset.norm);});});
 }
 function renderActions(){
  $("#actions").innerHTML="";
@@ -232,11 +256,12 @@ function setWerktijd(w){werktijd=w; pressGroup("#wt-vrij,#wt-og", w==="vrij"?$("
 /* ---------- taal ---------- */
 function gotoWorld(w){$$(".tab").forEach(function(x){x.setAttribute("aria-selected",x.dataset.w===w?"true":"false");});$$(".world").forEach(function(s){s.classList.toggle("active",s.id===w);});}
 function gotoNorm(id){gotoWorld("wwet");var el=$("#norm-"+id);if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("hl");setTimeout(function(){el.classList.remove("hl");},1800);}}
+function gotoJuris(id){gotoWorld("wjur");var el=$("#jur-"+id);if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("hl");setTimeout(function(){el.classList.remove("hl");},1800);}}
 function updateKlabel(){$("#k-label").textContent=L(LABELS[$("#persp").value]);}
 function setLang(l){
  LANG=l; $("#lang-nl").setAttribute("aria-pressed",l==="nl"?"true":"false"); $("#lang-en").setAttribute("aria-pressed",l==="en"?"true":"false");
  applyStatic(); updateKlabel();
- renderCockpit(); renderNorms(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit();
+ renderCockpit(); renderNorms(); renderJuris(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit();
  $("#decouple").innerHTML=decoupleText();
 }
 

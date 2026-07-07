@@ -49,6 +49,8 @@
     <span data-i18n="w1.tab">Scenario</span><span class="q" data-i18n="w1.q">Wat verandert er?</span></button>
   <button class="tab" role="tab" aria-selected="false" data-w="wwet">
     <span data-i18n="wet.tab">Wetgeving</span><span class="q" data-i18n="wet.q">Waar volgt dit uit?</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-w="wjur">
+    <span data-i18n="jur.tab">Jurisprudentie</span><span class="q" data-i18n="jur.q">Welke uitspraken raken dit?</span></button>
   <button class="tab" role="tab" aria-selected="false" data-w="w2">
     <span data-i18n="w2.tab">Regie Navigator</span><span class="q" data-i18n="w2.q">Waar blijkt dit uit?</span></button>
   <button class="tab" role="tab" aria-selected="false" data-w="w3">
@@ -114,6 +116,15 @@
         <div class="mon-demo" data-i18n="mon.demo">[DEMO] bronmonitoring gesimuleerd — geen echte scraping.</div>
         <div id="monitor"></div>
       </div>
+    </div>
+  </section>
+
+  <!-- WERELD — JURISPRUDENTIE (welke uitspraken raken dit?) -->
+  <section class="world" id="wjur" role="tabpanel">
+    <p class="hint" data-i18n="jur.intro">Deze jurisprudentie ondersteunt het beoordelingskader, maar FlexCare neemt geen rechterlijk oordeel over. Geen overclaim — wel herleidbaarheid naar de gezichtspunten.</p>
+    <div class="card">
+      <h3 data-i18n="jur.cases">Relevante uitspraken en lijnen</h3>
+      <div id="juris"></div>
     </div>
   </section>
 
