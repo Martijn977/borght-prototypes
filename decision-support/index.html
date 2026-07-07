@@ -9,126 +9,89 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header class="topbar"><div class="wrap">
   <span class="brand">Borght FlexCare</span>
-  <span class="demo-badge">Mock-up · demodata</span>
+  <span class="demo-badge" data-i18n="demo">Mock-up · demodata</span>
   <span class="spacer"></span>
-  <button class="theme-btn" id="theme" aria-label="Wissel licht/donker thema">Licht / donker</button>
+  <div class="lang" role="group" aria-label="Taal / Language">
+    <button id="lang-nl" class="lang-btn" aria-pressed="true">NL</button>
+    <button id="lang-en" class="lang-btn" aria-pressed="false">EN</button>
+  </div>
+  <button class="theme-btn" id="theme" aria-label="Thema">☾</button>
 </div></header>
 
 <div class="context"><div class="wrap">
   <div>
-    <div class="opdracht-title">Opdracht · Wijkverpleging</div>
-    <div class="opdracht-sub">A. Bakker (zelfstandige) · Zorginstelling De Linden · loopt sinds feb 2026</div>
+    <div class="opdracht-title" data-i18n="opdracht.title">Opdracht · Wijkverpleging</div>
+    <div class="opdracht-sub">A. Bakker · Zorginstelling De Linden · <span data-i18n="opdracht.since">loopt sinds feb 2026</span></div>
   </div>
   <div class="persp">
-    <span class="lbl">Perspectief</span>
+    <span class="lbl" data-i18n="perspectief">Perspectief</span>
     <select id="persp" aria-label="Perspectief">
-      <option value="og">Opdrachtgever</option><option value="on">Opdrachtnemer</option>
-      <option value="im">Intermediair</option><option value="ac">Accountant</option><option value="ju">Jurist</option>
+      <option value="og" data-i18n="persp.og">Opdrachtgever</option>
+      <option value="on" data-i18n="persp.on">Opdrachtnemer</option>
+      <option value="im" data-i18n="persp.im">Intermediair</option>
+      <option value="ac" data-i18n="persp.ac">Accountant</option>
+      <option value="ju" data-i18n="persp.ju">Jurist</option>
     </select>
   </div>
 </div></div>
 
-<nav class="tabs" role="tablist" aria-label="Weergaven"><div class="wrap">
-  <button class="tab" role="tab" aria-selected="true" data-w="w0">Samenvatting<span class="q">Hoe staat deze opdracht ervoor?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="w1">Scenario<span class="q">Wat verandert er?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="w2">Regie Navigator<span class="q">Waarom zie ik dit?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="w3">Regie<span class="q">Wat doe ik nu — en waarom leg ik dit vast?</span></button>
+<!-- MANAGEMENTCOCKPIT (persistent, boven de werelden) -->
+<div class="cockpit-band"><div class="wrap">
+  <div class="cockpit" id="cockpit"><!-- tiles via JS --></div>
+  <div class="change" id="change"><!-- belangrijkste wijziging via JS --></div>
+</div></div>
+
+<nav class="tabs" role="tablist" aria-label="Werelden"><div class="wrap">
+  <button class="tab" role="tab" aria-selected="true" data-w="w1">
+    <span data-i18n="w1.tab">Scenario</span><span class="q" data-i18n="w1.q">Wat verandert er?</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-w="w2">
+    <span data-i18n="w2.tab">Regie Navigator</span><span class="q" data-i18n="w2.q">Waar blijkt dit uit?</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-w="w3">
+    <span data-i18n="w3.tab">Regie</span><span class="q" data-i18n="w3.q">Wat doe ik nu?</span></button>
 </div></nav>
 
 <main class="wrap">
 
-  <!-- SAMENVATTING (entree directie) -->
-  <section class="world active" id="w0" role="tabpanel">
-    <div class="card">
-      <div class="cockpit">
-        <div class="col">
-          <h4>Stand</h4>
-          <div class="fact"><span>Onderbouwd</span><b class="num">8 / 10 onderwerpen</b></div>
-          <div class="fact"><span>Open vragen</span><b class="num">2</b></div>
-          <div class="fact"><span>Bewijsstukken ontbreken</span><b class="num">3</b></div>
-          <div class="fact"><span>Volgende herbeoordeling</span><b class="num">over 48 dagen</b></div>
-        </div>
-        <div class="col">
-          <h4>Financieel</h4>
-          <div class="fact"><span id="s-label">Opdrachtwaarde</span><b class="num" id="s-waarde">€ 106.080</b></div>
-          <div class="fact"><span>Looptijd</span><b class="num" id="s-loop">12 maanden</b></div>
-          <div class="fact"><span>Per maand</span><b class="num" id="s-maand">€ 8.840</b></div>
-        </div>
-        <div class="col">
-          <h4>Regie</h4>
-          <div class="fact"><span>Open acties</span><b class="num">3</b></div>
-          <div class="fact"><span>Laatst vastgelegd besluit</span><b id="s-besluit">—</b></div>
-          <div class="fact"><span>Eigenaar dossier</span><b>P. van Dam</b></div>
-        </div>
-      </div>
-      <div class="changes">
-        <p class="sectiontitle">Belangrijkste wijzigingen</p>
-        <ul>
-          <li>Werktijden gewijzigd → raakt onderwerp <b>“Gezag”</b> (nu een open vraag)</li>
-          <li>BAV-polis verlopen → actie staat uit bij de zelfstandige</li>
-        </ul>
-      </div>
-      <div class="gotos">
-        <button class="btn ghost" data-goto="w1">Naar Scenario</button>
-        <button class="btn ghost" data-goto="w2">Naar Regie Navigator</button>
-        <button class="btn ghost" data-goto="w3">Naar Regie</button>
-      </div>
-      <p class="no-verdict">Geen score, geen stoplicht-oordeel — telbare feiten, kernfinanciën en de laatste beslissing.</p>
-    </div>
-  </section>
-
   <!-- WERELD 1 — SCENARIO -->
-  <section class="world" id="w1" role="tabpanel">
+  <section class="world active" id="w1" role="tabpanel">
     <div class="grid2">
       <div class="card">
-        <h3>Parameters</h3>
+        <h3 data-i18n="w1.params">Parameters</h3>
         <div class="fields">
-          <div class="field"><label class="lbl">Uurtarief (€)</label><input type="number" id="tarief" value="85" min="0" step="1"></div>
-          <div class="field"><label class="lbl">Uren per week</label><input type="number" id="uren" value="24" min="0" step="1"></div>
-          <div class="field"><label class="lbl">Looptijd (mnd)</label><input type="number" id="loop" value="12" min="1" step="1"></div>
-          <div class="field"><label class="lbl">Indexatie (%)</label><input type="number" id="idx" value="3" min="0" step="1"></div>
+          <div class="field"><label class="lbl" data-i18n="f.tarief">Uurtarief (€)</label><input type="number" id="tarief" value="85" min="0"></div>
+          <div class="field"><label class="lbl" data-i18n="f.uren">Uren per week</label><input type="number" id="uren" value="24" min="0"></div>
+          <div class="field"><label class="lbl" data-i18n="f.loop">Looptijd (mnd)</label><input type="number" id="loop" value="12" min="1"></div>
+          <div class="field"><label class="lbl" data-i18n="f.idx">Indexatie (%)</label><input type="number" id="idx" value="3" min="0"></div>
         </div>
-        <div style="margin-top:var(--sp-4);">
-          <label class="lbl" style="display:block;margin-bottom:6px;">Werktijden (feitelijk kenmerk)</label>
-          <div class="seg" role="group" aria-label="Werktijden">
-            <button id="wt-vrij" aria-pressed="true">Vrij te bepalen</button>
-            <button id="wt-og" aria-pressed="false">Door opdrachtgever</button>
+        <div style="margin-top:16px;">
+          <label class="lbl" data-i18n="f.werktijden">Werktijden (feitelijk kenmerk)</label>
+          <div class="seg" role="group">
+            <button id="wt-vrij" aria-pressed="true" data-i18n="wt.vrij">Vrij te bepalen</button>
+            <button id="wt-og" aria-pressed="false" data-i18n="wt.og">Door opdrachtgever</button>
           </div>
         </div>
         <div class="scenctl">
-          <button class="btn" id="save-scen">Opslaan als scenario</button>
-          <button class="btn ghost" id="cmp-scen">Vergelijken</button>
+          <button class="btn" id="save-scen" data-i18n="scen.save">Opslaan als scenario</button>
+          <button class="btn ghost" id="cmp-scen" data-i18n="scen.cmp">Vergelijken</button>
         </div>
         <div class="saved" id="saved"></div>
-        <div class="note">Feitelijke kenmerken (werktijden) raken de <b>Regie Navigator</b>, niet het geld.</div>
       </div>
-
       <div class="card">
         <div class="kpi"><span class="lbl" id="k-label">Totale investering</span><div class="v num" id="k-total">€ 106.080</div></div>
-        <div style="display:flex;gap:var(--sp-8);">
-          <div class="kpi" style="border:none;"><span class="lbl">Per maand</span><div class="v sub num" id="k-maand">€ 8.840</div></div>
-          <div class="kpi" style="border:none;"><span class="lbl">Per jaar</span><div class="v sub num" id="k-jaar">€ 106.080</div></div>
+        <div style="display:flex;gap:32px;">
+          <div class="kpi" style="border:none;"><span class="lbl" data-i18n="k.maand">Per maand</span><div class="v sub num" id="k-maand">€ 8.840</div></div>
+          <div class="kpi" style="border:none;"><span class="lbl" data-i18n="k.jaar">Per jaar</span><div class="v sub num" id="k-jaar">€ 106.080</div></div>
         </div>
         <div class="insight">
-          <h4>Wat verandert er écht?</h4>
-          <div class="lever"><span class="dot money"></span><div><b>Financiële hefbomen</b> — tarief, uren, looptijd, indexatie. Bewegen de opdrachtwaarde.</div></div>
-          <div class="lever"><span class="dot fact"></span><div><b>Feitelijke hefbomen</b> — werktijden, vervanging, inbedding. Bewegen de <b>onderbouwing</b>, niet het geld.</div></div>
-          <div class="banner" id="decouple">Een hoger tarief verandert de <b>opdrachtwaarde</b> — maar <b>niets</b> aan gezag, vervanging of bewijs.</div>
+          <h4 data-i18n="w1.echt">Wat verandert er écht?</h4>
+          <div class="lever"><span class="dot money"></span><div data-i18n="lever.money"><b>Financiële hefbomen</b> — tarief, uren, looptijd. Bewegen de opdrachtwaarde.</div></div>
+          <div class="lever"><span class="dot fact"></span><div data-i18n="lever.fact"><b>Feitelijke hefbomen</b> — werktijden, vervanging. Bewegen de <b>onderbouwing</b>, niet het geld.</div></div>
+          <div class="banner" id="decouple" data-i18n="decouple.default">Een hoger tarief verandert de opdrachtwaarde — maar <b>niets</b> aan gezag, vervanging of bewijs.</div>
         </div>
       </div>
-    </div>
-
-    <div class="card" style="margin-top:var(--sp-6);">
-      <h3>Tijdlijn — wat komt eraan?</h3>
-      <div class="timeline"><div class="axis" id="axis"></div>
-        <div class="legend">
-          <span><span class="dot" style="width:10px;height:10px;background:var(--navy);"></span> Tijd-gedreven (kalender)</span>
-          <span><span class="dot" style="width:10px;height:10px;background:var(--warn);"></span> Event-gedreven (komt binnen)</span>
-        </div>
-      </div>
-      <div class="note">De tijdlijn toont <b>wanneer</b> iets speelt — nooit <b>hoe</b> het juridisch afloopt.</div>
     </div>
   </section>
 
@@ -136,55 +99,61 @@
   <section class="world" id="w2" role="tabpanel">
     <div class="card">
       <div class="tally">
-        <div><span class="big num">8/10</span> <span class="lbl">onderwerpen onderbouwd</span></div>
-        <div class="item"><b class="num">2</b> open vragen</div>
-        <div class="item"><b class="num">3</b> bewijsstukken ontbreken</div>
+        <div><span class="big num">8/10</span> <span class="lbl" data-i18n="nav.onderbouwd">onderwerpen onderbouwd</span></div>
+        <div class="item"><b class="num">2</b> <span data-i18n="nav.open">open vragen</span></div>
+        <div class="item"><b class="num">3</b> <span data-i18n="nav.missing">bewijsstukken ontbreken</span></div>
       </div>
+      <p class="hint" data-i18n="nav.hint">Klik een onderwerp voor “Waar blijkt dit uit?” — feit, bron, URL, opgehaald op, bewijs, actie.</p>
       <div style="overflow-x:auto;">
-        <table><thead><tr><th>Onderwerp</th><th>Feiten bekend</th><th>Bron</th><th>Bewijs</th><th>Aandacht</th></tr></thead>
-        <tbody id="navbody"></tbody></table>
+        <table><thead><tr>
+          <th data-i18n="th.onderwerp">Onderwerp</th><th data-i18n="th.feiten">Feiten bekend</th>
+          <th data-i18n="th.bron">Bron</th><th data-i18n="th.bewijs">Bewijs</th><th data-i18n="th.aandacht">Aandacht</th>
+        </tr></thead><tbody id="navbody"></tbody></table>
       </div>
-      <p class="no-verdict">Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt nog.</p>
+      <p class="no-verdict" data-i18n="nav.noverdict">Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.</p>
+    </div>
+
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card">
+        <h3 data-i18n="bron.title">Bronnen</h3>
+        <div id="sources"></div>
+      </div>
+      <div class="card monitor">
+        <h3 data-i18n="mon.title">Bronmonitor</h3>
+        <div class="mon-demo" data-i18n="mon.demo">[DEMO] bronmonitoring gesimuleerd — geen echte scraping.</div>
+        <div id="monitor"></div>
+      </div>
     </div>
   </section>
 
   <!-- WERELD 3 — REGIE -->
   <section class="world" id="w3" role="tabpanel">
-    <p class="note" style="margin:0 0 var(--sp-4);">Regie omvat <b>acties, besluiten, eigenaarschap, planning en audit</b>. Het besluit is hier een gevolg, geen apart eiland.</p>
-    <div class="regie-cols">
+    <p class="hint" data-i18n="w3.intro">Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.</p>
+    <div class="grid2">
       <div class="card">
-        <h3>Acties — wat moet er nu gebeuren?</h3>
+        <h3 data-i18n="acties.title">Acties</h3>
         <div id="actions"></div>
-        <p class="no-verdict">Elke actie komt uit een openstaand punt of uit de tijdlijn — niet uit een oordeel.</p>
       </div>
-      <div class="card">
-        <h3>Besluit — waarop rust mijn keuze?</h3>
-        <div class="opts" role="group" aria-label="Besluit">
-          <button class="opt" aria-pressed="true">Verlengen</button><button class="opt" aria-pressed="false">Beëindigen</button>
-          <button class="opt" aria-pressed="false">Herzien</button><button class="opt" aria-pressed="false">Aanhouden</button>
+      <div class="card decision">
+        <h3 data-i18n="besluit.title">Besluit — waarop rust mijn keuze?</h3>
+        <div class="opts" role="group">
+          <button class="opt" aria-pressed="true" data-i18n="opt.verlengen">Verlengen</button>
+          <button class="opt" aria-pressed="false" data-i18n="opt.beeindigen">Beëindigen</button>
+          <button class="opt" aria-pressed="false" data-i18n="opt.herzien">Herzien</button>
+          <button class="opt" aria-pressed="false" data-i18n="opt.aanhouden">Aanhouden</button>
         </div>
-        <p class="sectiontitle">Waarop rust deze keuze? — feiten, geen advies</p>
-        <ul class="basis">
-          <li><span class="mark yes">✓</span> Alle relevante feiten bekend</li>
-          <li><span class="mark yes">✓</span> Financieel akkoord (scenario vastgelegd)</li>
-          <li><span class="mark yes">✓</span> Contractvoorwaarden akkoord</li>
-          <li><span class="mark partial">◐</span> Onderbouwing: 8/10 onderwerpen — <b>2 open vragen</b></li>
-        </ul>
-        <textarea id="reason" placeholder="Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor"></textarea>
-        <div style="margin-top:var(--sp-4);display:flex;gap:var(--sp-3);align-items:center;">
-          <button class="btn" id="commit">Vastleggen als beslissing</button>
-          <span class="note" style="margin:0;">De mens beslist; het systeem legt vast.</span>
+        <p class="sectiontitle" data-i18n="besluit.basis">Waarop rust deze keuze? — feiten, geen advies</p>
+        <ul class="basis" id="basis"></ul>
+        <textarea id="reason" data-i18n-ph="besluit.reason" placeholder="Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor"></textarea>
+        <div style="margin-top:16px;">
+          <button class="btn" id="commit" data-i18n="besluit.commit">Vastleggen als beslissing</button>
         </div>
-        <div class="audit" id="audit">
-          <p class="sectiontitle" style="margin-bottom:8px;">Auditspoor</p>
-          <div class="entry"><span class="t num">06 feb 2026</span> Modelovereenkomst goedgekeurd — P. van Dam</div>
-          <div class="entry"><span class="t num">28 jun 2026</span> Herbeoordeling gemarkeerd — Systeem</div>
-        </div>
+        <div class="audit" id="audit"><p class="sectiontitle" data-i18n="audit.title">Auditspoor</p></div>
       </div>
     </div>
   </section>
 
-  <p class="foot">Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support-capability.</p>
+  <p class="foot" data-i18n="foot">Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support.</p>
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

@@ -1,138 +1,233 @@
 (function(){
-  "use strict";
-  var $=function(s,r){return (r||document).querySelector(s);};
-  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s);};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+var LANG="nl";
+function L(o){return (o && typeof o==="object" && o.nl!=null) ? (o[LANG]!=null?o[LANG]:o.nl) : o;}
 
-  $("#theme").addEventListener("click",function(){
-    var cur=document.documentElement.getAttribute("data-theme");
-    var next=cur==="dark"?"light":(cur==="light"?"dark":(matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark"));
-    document.documentElement.setAttribute("data-theme",next);
-  });
+/* ---------- statische UI-teksten ---------- */
+var UI={
+ nl:{demo:"Mock-up · demodata","opdracht.title":"Opdracht · Wijkverpleging","opdracht.since":"loopt sinds feb 2026",
+  perspectief:"Perspectief","persp.og":"Opdrachtgever","persp.on":"Opdrachtnemer","persp.im":"Intermediair","persp.ac":"Accountant","persp.ju":"Jurist",
+  "w1.tab":"Scenario","w1.q":"Wat verandert er?","w2.tab":"Regie Navigator","w2.q":"Waar blijkt dit uit?","w3.tab":"Regie","w3.q":"Wat doe ik nu?",
+  "w1.params":"Parameters","f.tarief":"Uurtarief (€)","f.uren":"Uren per week","f.loop":"Looptijd (mnd)","f.idx":"Indexatie (%)","f.werktijden":"Werktijden (feitelijk kenmerk)",
+  "wt.vrij":"Vrij te bepalen","wt.og":"Door opdrachtgever","scen.save":"Opslaan als scenario","scen.cmp":"Vergelijken","k.maand":"Per maand","k.jaar":"Per jaar",
+  "w1.echt":"Wat verandert er écht?","lever.money":"<b>Financiële hefbomen</b> — tarief, uren, looptijd. Bewegen de opdrachtwaarde.",
+  "lever.fact":"<b>Feitelijke hefbomen</b> — werktijden, vervanging. Bewegen de <b>onderbouwing</b>, niet het geld.",
+  "decouple.default":"Een hoger tarief verandert de opdrachtwaarde — maar <b>niets</b> aan gezag, vervanging of bewijs.",
+  "nav.onderbouwd":"onderwerpen onderbouwd","nav.open":"open vragen","nav.missing":"bewijsstukken ontbreken",
+  "nav.hint":"Klik een onderwerp voor “Waar blijkt dit uit?” — feit, bron, URL, opgehaald op, bewijs, actie.",
+  "th.onderwerp":"Onderwerp","th.feiten":"Feiten bekend","th.bron":"Bron","th.bewijs":"Bewijs","th.aandacht":"Aandacht",
+  "nav.noverdict":"Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.",
+  "bron.title":"Bronnen","mon.title":"Bronmonitor","mon.demo":"[DEMO] bronmonitoring gesimuleerd — geen echte scraping.",
+  "w3.intro":"Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.",
+  "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
+  "besluit.basis":"Waarop rust deze keuze? — feiten, geen advies","besluit.reason":"Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor",
+  "besluit.commit":"Vastleggen als beslissing","audit.title":"Auditspoor",
+  foot:"Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support.",
+  "evi.feit":"Feit","evi.bron":"Bron","evi.url":"Bron-URL","evi.opgehaald":"Opgehaald op","evi.bewijs":"Bewijsstuk","evi.ontbreekt":"Ontbrekende informatie","evi.actie":"Actie",
+  "src.opgehaald":"opgehaald op","src.voor":"relevant voor"},
+ en:{demo:"Mock-up · demo data","opdracht.title":"Assignment · Community nursing","opdracht.since":"running since Feb 2026",
+  perspectief:"Perspective","persp.og":"Client","persp.on":"Contractor","persp.im":"Intermediary","persp.ac":"Accountant","persp.ju":"Lawyer",
+  "w1.tab":"Scenario","w1.q":"What changes?","w2.tab":"Governance Navigator","w2.q":"How is this evidenced?","w3.tab":"Governance","w3.q":"What do I do now?",
+  "w1.params":"Parameters","f.tarief":"Hourly rate (€)","f.uren":"Hours per week","f.loop":"Duration (months)","f.idx":"Indexation (%)","f.werktijden":"Working hours (factual element)",
+  "wt.vrij":"Freely determined","wt.og":"Set by client","scen.save":"Save as scenario","scen.cmp":"Compare","k.maand":"Per month","k.jaar":"Per year",
+  "w1.echt":"What actually changes?","lever.money":"<b>Financial levers</b> — rate, hours, duration. Move the contract value.",
+  "lever.fact":"<b>Factual levers</b> — working hours, substitution. Move the <b>evidence</b>, not the money.",
+  "decouple.default":"A higher rate changes the contract value — but <b>nothing</b> about authority, substitution or evidence.",
+  "nav.onderbouwd":"topics evidenced","nav.open":"open questions","nav.missing":"evidence items missing",
+  "nav.hint":"Click a topic for “How is this evidenced?” — fact, source, URL, retrieved on, evidence, action.",
+  "th.onderwerp":"Topic","th.feiten":"Facts known","th.bron":"Source","th.bewijs":"Evidence","th.aandacht":"Attention",
+  "nav.noverdict":"No verdict, no score, no “green = safe”. Only: what is known, how it is evidenced, and what is missing.",
+  "bron.title":"Sources","mon.title":"Source monitor","mon.demo":"[DEMO] source monitoring simulated — no real scraping.",
+  "w3.intro":"Governance: actions, decision and recording. The decision is a consequence, not a separate island.",
+  "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
+  "besluit.basis":"What does this choice rest on? — facts, not advice","besluit.reason":"Note on this decision (optional) — recorded in the audit trail",
+  "besluit.commit":"Record as decision","audit.title":"Audit trail",
+  foot:"Interactive mock-up with demo data — no real file, no legal information. FlexCare · Decision Support.",
+  "evi.feit":"Fact","evi.bron":"Source","evi.url":"Source URL","evi.opgehaald":"Retrieved on","evi.bewijs":"Evidence item","evi.ontbreekt":"Missing information","evi.actie":"Action",
+  "src.opgehaald":"retrieved on","src.voor":"relevant to"}
+};
 
-  function gotoTab(w){
-    $$(".tab").forEach(function(x){x.setAttribute("aria-selected", x.dataset.w===w ? "true":"false");});
-    $$(".world").forEach(function(s){s.classList.toggle("active", s.id===w);});
-  }
-  $$(".tab").forEach(function(t){t.addEventListener("click",function(){gotoTab(t.dataset.w);});});
-  $$("[data-goto]").forEach(function(b){b.addEventListener("click",function(){gotoTab(b.dataset.goto);});});
+var LABELS={og:{nl:"Totale investering",en:"Total investment"},on:{nl:"Totale omzet",en:"Total revenue"},
+ im:{nl:"Totale opdrachtwaarde",en:"Total contract value"},ac:{nl:"Contractwaarde",en:"Contract value"},ju:{nl:"Vergoeding",en:"Remuneration"}};
+var TYPE={wet:{nl:"Wet",en:"Law"},beleid:{nl:"Beleid",en:"Policy"},juris:{nl:"Jurisprudentie",en:"Case law"},intern:{nl:"Intern document",en:"Internal document"},none:{nl:"—",en:"—"}};
 
-  var LABELS={og:"Totale investering",on:"Totale omzet",im:"Totale opdrachtwaarde",ac:"Contractwaarde",ju:"Vergoeding"};
-  $("#persp").addEventListener("change",function(){
-    $("#k-label").textContent=LABELS[this.value]; $("#s-label").textContent=LABELS[this.value];
-  });
+var TILES=[
+ {k:{nl:"Status opdracht",en:"Assignment status"},v:{nl:"Actie nodig",en:"Action needed"},c:"att"},
+ {k:{nl:"Onderbouwing",en:"Substantiation"},v:{nl:"Onvolledig · 8/10",en:"Incomplete · 8/10"},c:"att"},
+ {k:{nl:"Open acties",en:"Open actions"},v:{nl:"3",en:"3"},c:""},
+ {k:{nl:"Bewijs ontbreekt",en:"Evidence missing"},v:{nl:"3 stukken",en:"3 items"},c:"miss"},
+ {k:{nl:"Laatste broncheck",en:"Last source check"},v:{nl:"6 jul 2026",en:"6 Jul 2026"},c:""},
+ {k:{nl:"Herbeoordeling",en:"Re-assessment"},v:{nl:"Gepland · 48 dgn",en:"Planned · 48 days"},c:""}
+];
+var CHANGE={vrij:{nl:"Belangrijkste wijziging: bron ‘Handreiking Belastingdienst’ is bijgewerkt sinds de vorige beoordeling.",
+  en:"Key change: source ‘Belastingdienst guidance’ was updated since the last assessment."},
+ og:{nl:"Belangrijkste wijziging: werktijden gewijzigd → raakt onderwerp ‘Gezag’ (nu een open vraag).",
+  en:"Key change: working hours changed → affects ‘Authority’ (now an open question)."}};
 
-  var fmt=new Intl.NumberFormat("nl-NL",{style:"currency",currency:"EUR",maximumFractionDigits:0});
-  function vals(){return {tarief:+$("#tarief").value||0,uren:+$("#uren").value||0,loop:+$("#loop").value||1,idx:+$("#idx").value||0};}
-  function calc(v){var weeks=v.loop*52/12; var f=1+(v.idx/100)*(v.loop/24); return {total:v.tarief*v.uren*weeks*f,jaar:v.tarief*v.uren*52*(1+v.idx/200)};}
-  function recompute(){
-    var v=vals(), c=calc(v);
-    $("#k-total").textContent=fmt.format(Math.round(c.total));
-    $("#k-maand").textContent=fmt.format(Math.round(c.total/v.loop));
-    $("#k-jaar").textContent=fmt.format(Math.round(c.jaar));
-    $("#s-waarde").textContent=fmt.format(Math.round(c.total));
-    $("#s-maand").textContent=fmt.format(Math.round(c.total/v.loop));
-    $("#s-loop").textContent=v.loop+" maanden";
-  }
-  ["tarief","uren","loop","idx"].forEach(function(id){$("#"+id).addEventListener("input",recompute);});
-  recompute();
+var GEZAG={
+ vrij:{st:"full",stl:{nl:"Bekend",en:"Known"},bwB:"ok",bw:{nl:"✓ contract art. 4",en:"✓ contract art. 4"},aB:"neutral",aT:{nl:"—",en:"—"},
+   feit:{nl:"Werktijden vrij te bepalen door de zelfstandige",en:"Working hours freely set by the contractor"},
+   ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"},url:"https://www.rechtspraak.nl",opg:"2 apr 2026",type:"juris"},
+ og:{st:"part",stl:{nl:"Gewijzigd",en:"Changed"},bwB:"miss",bw:{nl:"✗ nog geen bewijs",en:"✗ no evidence yet"},aB:"open",aT:{nl:"open vraag",en:"open question"},
+   feit:{nl:"Werktijden worden door de opdrachtgever bepaald",en:"Working hours are set by the client"},
+   ontbr:{nl:"bewijs van vrije invulling",en:"evidence of free discretion"},actie:{nl:"Bewijs vastleggen",en:"Record evidence"},url:"https://www.rechtspraak.nl",opg:"2 apr 2026",type:"juris"}
+};
+function navRows(){var g=GEZAG[werktijd];return [
+ {o:{nl:"Gezag",en:"Authority"},st:g.st,stl:g.stl,type:g.type,url:g.url,opg:g.opg,bwB:g.bwB,bw:g.bw,aB:g.aB,aT:g.aT,feit:g.feit,ontbr:g.ontbr,actie:g.actie},
+ {o:{nl:"Organisatorische inbedding",en:"Organisational embedding"},st:"part",stl:{nl:"Deels bekend",en:"Partly known"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",bwB:"miss",bw:{nl:"✗ ontbreekt",en:"✗ missing"},aB:"open",aT:{nl:"open vraag",en:"open question"},feit:{nl:"Werkt in team; eigen kleding/telefoon",en:"Works in a team; own clothing/phone"},ontbr:{nl:"functieomschrijving",en:"job description"},actie:{nl:"Aanvullen inbedding",en:"Complete embedding"}},
+ {o:{nl:"Ondernemerschap",en:"Entrepreneurship"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",bwB:"ok",bw:{nl:"✓ KvK + 3 opdrachtgevers",en:"✓ CoC + 3 clients"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"Ingeschreven KvK, factureert 3 opdrachtgevers",en:"Registered, invoices 3 clients"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}},
+ {o:{nl:"Vervanging",en:"Substitution"},st:"none",stl:{nl:"Onbekend",en:"Unknown"},type:"none",url:"",opg:"—",bwB:"miss",bw:{nl:"✗ ontbreekt",en:"✗ missing"},aB:"open",aT:{nl:"open vraag",en:"open question"},feit:{nl:"Onbekend of vervanging is toegestaan",en:"Unknown whether substitution is allowed"},ontbr:{nl:"clausule/verklaring",en:"clause/statement"},actie:{nl:"Vraag beantwoorden",en:"Answer question"}},
+ {o:{nl:"Ondernemersrisico",en:"Business risk"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"intern",url:"",opg:"6 feb 2026",bwB:"open",bw:{nl:"✓ eigen BAV (verlopen)",en:"✓ own liability ins. (expired)"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"Draagt eigen aansprakelijkheid; polis verlopen",en:"Bears own liability; policy expired"},ontbr:{nl:"actuele polis",en:"current policy"},actie:{nl:"Polis vernieuwen",en:"Renew policy"}},
+ {o:{nl:"Meerdere opdrachtgevers",en:"Multiple clients"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",bwB:"ok",bw:{nl:"✓ facturen",en:"✓ invoices"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"3 opdrachtgevers in 12 maanden",en:"3 clients in 12 months"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}},
+ {o:{nl:"Eigen materialen",en:"Own equipment"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"intern",url:"",opg:"6 feb 2026",bwB:"ok",bw:{nl:"✓ verklaring",en:"✓ statement"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"Eigen telefoon en vervoer",en:"Own phone and transport"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}},
+ {o:{nl:"Contractvorm",en:"Contract form"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"intern",url:"",opg:"6 feb 2026",bwB:"ok",bw:{nl:"✓ modelovereenkomst",en:"✓ model agreement"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"Goedgekeurde modelovereenkomst v1",en:"Approved model agreement v1"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}},
+ {o:{nl:"Duur",en:"Duration"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",bwB:"ok",bw:{nl:"✓ engagement",en:"✓ engagement"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"12 maanden, geen verlengingen",en:"12 months, no renewals"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}},
+ {o:{nl:"Exclusiviteit",en:"Exclusivity"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"juris",url:"https://www.rechtspraak.nl",opg:"2 apr 2026",bwB:"ok",bw:{nl:"✓ contract",en:"✓ contract"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"Geen exclusiviteitsbeding",en:"No exclusivity clause"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}}
+];}
 
-  function pressGroup(sel,btn){$$(sel).forEach(function(b){b.setAttribute("aria-pressed","false");});btn.setAttribute("aria-pressed","true");}
-  $$(".opts .opt").forEach(function(o){o.addEventListener("click",function(){pressGroup(".opts .opt",o);});});
+var SSTAT={actueel:{nl:"actueel",en:"current"},controleren:{nl:"opnieuw controleren",en:"re-check"},aanwezig:{nl:"aanwezig",en:"present"}};
+var SOURCES=[
+ {t:{nl:"Handreiking beoordeling arbeidsrelaties",en:"Guidance on assessing employment relationships"},houder:"Belastingdienst",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",voor:{nl:"Gezag, handhaving",en:"Authority, enforcement"},status:"actueel"},
+ {t:{nl:"Burgerlijk Wetboek — art. 7:610",en:"Civil Code — art. 7:610"},houder:"wetten.overheid.nl",url:"https://wetten.overheid.nl",opg:"6 jul 2026",voor:{nl:"Organisatorische inbedding",en:"Organisational embedding"},status:"actueel"},
+ {t:{nl:"Uitspraak arbeidsrelatie (voorbeeld)",en:"Employment-relationship ruling (example)"},houder:"Rechtspraak.nl",url:"https://www.rechtspraak.nl",opg:"2 apr 2026",voor:{nl:"Gezag (jurisprudentie)",en:"Authority (case law)"},status:"controleren"},
+ {t:{nl:"Modelovereenkomst v1",en:"Model agreement v1"},houder:{nl:"Intern bewijsstuk",en:"Internal evidence"},url:"",opg:"6 feb 2026",voor:{nl:"Contractvorm",en:"Contract form"},status:"aanwezig"}
+];
+var MONITOR=[
+ {c:"new",t:{nl:"Nieuwe bron gevonden — handreiking Belastingdienst",en:"New source found — Belastingdienst guidance"},w:{nl:"vandaag",en:"today"}},
+ {c:"chg",t:{nl:"Bron gewijzigd sinds vorige beoordeling — wetten.overheid.nl",en:"Source changed since last assessment — wetten.overheid.nl"},w:{nl:"2 dgn",en:"2 days"}},
+ {c:"err",t:{nl:"Bron tijdelijk niet bereikbaar — rechtspraak.nl",en:"Source temporarily unreachable — rechtspraak.nl"},w:{nl:"1 dg",en:"1 day"}},
+ {c:"chk",t:{nl:"Hercontrole nodig — jurisprudentie ouder dan 90 dagen",en:"Re-check needed — case law older than 90 days"},w:{nl:"—",en:"—"}}
+];
+var ACTIONS=[
+ {t:{nl:"Bewijs opvragen: BAV-polis (verlopen)",en:"Request evidence: liability insurance (expired)"},why:{nl:"uit: Ondernemersrisico",en:"from: Business risk"},who:{nl:"aan zelfstandige",en:"to contractor"},btn:{nl:"Verzoek sturen",en:"Send request"}},
+ {t:{nl:"Open vraag beantwoorden: vervanging toegestaan?",en:"Answer open question: substitution allowed?"},why:{nl:"uit: Vervanging",en:"from: Substitution"},who:{nl:"aan opdrachtgever",en:"to client"},btn:{nl:"Beantwoorden",en:"Answer"}},
+ {t:{nl:"Herbeoordeling inplannen (termijn verlopen)",en:"Schedule re-assessment (term expired)"},why:{nl:"uit: broncheck",en:"from: source check"},who:{nl:"aan jurist",en:"to lawyer"},btn:{nl:"Inplannen",en:"Schedule"}}
+];
+var BASIS=[
+ {m:"yes",t:{nl:"Alle relevante feiten bekend",en:"All relevant facts known"}},
+ {m:"yes",t:{nl:"Financieel akkoord (scenario vastgelegd)",en:"Financially agreed (scenario recorded)"}},
+ {m:"yes",t:{nl:"Contractvoorwaarden akkoord",en:"Contract terms agreed"}},
+ {m:"partial",t:{nl:"Onderbouwing: 8/10 onderwerpen — 2 open vragen",en:"Substantiation: 8/10 topics — 2 open questions"}}
+];
+var AUDIT0=[
+ {t:"06-02-2026",a:{nl:"Modelovereenkomst goedgekeurd — P. van Dam",en:"Model agreement approved — P. van Dam"}},
+ {t:"28-06-2026",a:{nl:"Herbeoordeling gemarkeerd — Systeem",en:"Re-assessment flagged — System"}}
+];
+var T={actie:{nl:"Actie gestart: ",en:"Action started: "},saved:{nl:"Scenario opgeslagen",en:"Scenario saved"},
+ copied:{nl:"Scenario gekopieerd naar de velden",en:"Scenario copied to the fields"},
+ cmp0:{nl:"Sla eerst twee scenario's op om te vergelijken",en:"Save two scenarios first to compare"},
+ cmp:{nl:"Vergelijking (mock)",en:"Comparison (mock)"},
+ besluit:{nl:"Beslissing vastgelegd in het auditspoor: ",en:"Decision recorded in the audit trail: "},vandaag:{nl:"vandaag",en:"today"},ondanks:{nl:"genomen ondanks 2 open vragen",en:"taken despite 2 open questions"}};
 
-  /* Scenario's opslaan / kopiëren / vergelijken (B2B: velden, geen sliders) */
-  var scenCount=0;
-  $("#save-scen").addEventListener("click",function(){
-    scenCount++; var name=String.fromCharCode(64+scenCount); var v=vals(), c=calc(v);
-    var el=document.createElement("div"); el.className="scen";
-    el.innerHTML='<div class="n">Scenario '+name+'</div><div class="t num">'+fmt.format(Math.round(c.total))+
-      ' · €'+v.tarief+'/u · '+v.uren+'u · '+v.loop+'mnd</div><div class="acts">'+
-      '<button data-copy>Kopiëren</button></div>';
-    el.querySelector("[data-copy]").addEventListener("click",function(){
-      $("#tarief").value=v.tarief;$("#uren").value=v.uren;$("#loop").value=v.loop;$("#idx").value=v.idx;
-      recompute(); showToast("Scenario "+name+" gekopieerd naar de velden");
-    });
-    $("#saved").appendChild(el); showToast("Scenario "+name+" opgeslagen");
-  });
-  $("#cmp-scen").addEventListener("click",function(){
-    var n=$$("#saved .scen").length;
-    showToast(n<2 ? "Sla eerst twee scenario's op om te vergelijken" : "Vergelijking van "+n+" scenario's (mock)");
-  });
+/* ---------- render ---------- */
+function applyStatic(){
+ $$("[data-i18n]").forEach(function(el){var v=UI[LANG][el.dataset.i18n]; if(v!=null) el.innerHTML=v;});
+ $$("[data-i18n-ph]").forEach(function(el){var v=UI[LANG][el.dataset.i18nPh]; if(v!=null) el.placeholder=v;});
+ document.documentElement.setAttribute("lang",LANG);
+}
+function renderCockpit(){
+ $("#cockpit").innerHTML=TILES.map(function(t){return '<div class="tile"><div class="k">'+L(t.k)+'</div><div class="v '+t.c+'">'+L(t.v)+'</div></div>';}).join("");
+ $("#change").textContent=L(CHANGE[werktijd]);
+}
+function renderNav(){
+ $("#navbody").innerHTML="";
+ navRows().forEach(function(r){
+  var tr=document.createElement("tr"); tr.className="head-row"; tr.tabIndex=0; tr.setAttribute("aria-expanded","false");
+  tr.innerHTML='<td><b>'+L(r.o)+'</b> <span class="disclose">▸</span></td>'+
+   '<td><span class="state"><span class="g '+r.st+'"></span>'+L(r.stl)+'</span></td>'+
+   '<td><span class="src">'+L(TYPE[r.type])+'</span></td>'+
+   '<td><span class="badge '+r.bwB+'">'+L(r.bw)+'</span></td>'+
+   '<td><span class="badge '+r.aB+'">'+L(r.aT)+'</span></td>';
+  var det=document.createElement("tr"); det.className="detail";
+  var urlHtml = r.url ? '<a href="'+r.url+'" target="_blank" rel="noopener">'+r.url+'</a> <span class="demo">[DEMO]</span>' : '<span class="src">—</span>';
+  det.innerHTML='<td colspan="5"><div class="evi">'+
+   '<div class="step"><b>'+UI[LANG]["evi.feit"]+'</b>'+L(r.feit)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.bron"]+'</b>'+L(TYPE[r.type])+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.url"]+'</b>'+urlHtml+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.opgehaald"]+'</b>'+r.opg+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.bewijs"]+'</b>'+L(r.bw)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.ontbreekt"]+'</b>'+L(r.ontbr)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.actie"]+'</b>'+L(r.actie)+'</div></div></td>';
+  function tgl(){var open=det.classList.toggle("show"); tr.setAttribute("aria-expanded",open?"true":"false");}
+  tr.addEventListener("click",tgl);
+  tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tgl();}});
+  $("#navbody").appendChild(tr); $("#navbody").appendChild(det);
+ });
+}
+function renderSources(){
+ $("#sources").innerHTML=SOURCES.map(function(s){
+  var url = s.url ? '<a href="'+s.url+'" target="_blank" rel="noopener">'+s.url+'</a>' : '<span class="src">'+L(s.houder)+'</span>';
+  return '<div class="srccard"><div class="t">'+L(s.t)+' <span class="demo">[DEMO]</span></div>'+
+   '<div class="meta">'+L(s.houder)+' · '+UI[LANG]["src.voor"]+': '+L(s.voor)+'</div>'+
+   '<div class="row"><span>'+url+'</span><span class="badge '+(s.status==="controleren"?"open":"ok")+'">'+L(SSTAT[s.status])+'</span></div>'+
+   '<div class="meta">'+UI[LANG]["src.opgehaald"]+' '+s.opg+'</div></div>';
+ }).join("");
+}
+function renderMonitor(){
+ $("#monitor").innerHTML=MONITOR.map(function(m){return '<div class="mon '+m.c+'"><span class="ic"></span><span>'+L(m.t)+'</span><span class="when">'+L(m.w)+'</span></div>';}).join("");
+}
+function renderActions(){
+ $("#actions").innerHTML="";
+ ACTIONS.forEach(function(a){
+  var d=document.createElement("div"); d.className="action";
+  d.innerHTML='<div><div>'+L(a.t)+'</div><div class="why">'+L(a.why)+'</div></div><span class="who">'+L(a.who)+'</span><button class="btn ghost">'+L(a.btn)+'</button>';
+  d.querySelector("button").addEventListener("click",function(){toast(L(T.actie)+L(a.t));});
+  $("#actions").appendChild(d);
+ });
+}
+function renderBasis(){
+ $("#basis").innerHTML=BASIS.map(function(b){return '<li><span class="mark '+b.m+'">'+(b.m==="yes"?"✓":"◐")+'</span>'+L(b.t)+'</li>';}).join("");
+}
+var auditExtra=[];
+function renderAudit(){
+ $("#audit").innerHTML='<p class="sectiontitle">'+UI[LANG]["audit.title"]+'</p>'+
+  AUDIT0.map(function(e){return '<div class="entry"><span class="t num">'+e.t+'</span>'+L(e.a)+'</div>';}).join("")+
+  auditExtra.map(function(e){return '<div class="entry"><span class="t num">'+e.t+'</span>'+e.a+'</div>';}).join("");
+}
 
-  var GEZAG={
-    vrij:{state:"full",label:"Bekend",aB:"neutral",aT:"—",feit:"Werktijden vrij te bepalen door de zelfstandige",bewijs:"✓ contract art. 4",bwB:"ok"},
-    og:{state:"part",label:"Gewijzigd",aB:"open",aT:"open vraag",feit:"Werktijden worden door de opdrachtgever bepaald",bewijs:"✗ nog geen bewijs",bwB:"miss"}
-  };
-  var werktijd="vrij";
-  function setWerktijd(w){
-    werktijd=w; pressGroup("#wt-vrij,#wt-og", w==="vrij"?$("#wt-vrij"):$("#wt-og")); renderNav();
-    $("#decouple").innerHTML = w==="og"
-      ? "U wijzigde een <b>feitelijk</b> kenmerk (werktijden). Financieel effect: <b>verwaarloosbaar</b>. In de Regie Navigator is <b>‘Gezag’</b> nu een aandachtspunt geworden."
-      : "Een hoger tarief verandert de <b>opdrachtwaarde</b> — maar <b>niets</b> aan gezag, vervanging of bewijs.";
-  }
-  $("#wt-vrij").addEventListener("click",function(){setWerktijd("vrij");});
-  $("#wt-og").addEventListener("click",function(){setWerktijd("og");});
+/* ---------- scenario ---------- */
+var fmt=new Intl.NumberFormat("nl-NL",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+function vals(){return {tarief:+$("#tarief").value||0,uren:+$("#uren").value||0,loop:+$("#loop").value||1,idx:+$("#idx").value||0};}
+function calc(v){var w=v.loop*52/12,f=1+(v.idx/100)*(v.loop/24);return {total:v.tarief*v.uren*w*f,jaar:v.tarief*v.uren*52*(1+v.idx/200)};}
+function recompute(){var v=vals(),c=calc(v);$("#k-total").textContent=fmt.format(Math.round(c.total));$("#k-maand").textContent=fmt.format(Math.round(c.total/v.loop));$("#k-jaar").textContent=fmt.format(Math.round(c.jaar));}
+function pressGroup(sel,btn){$$(sel).forEach(function(b){b.setAttribute("aria-pressed","false");});btn.setAttribute("aria-pressed","true");}
 
-  function navRows(){var g=GEZAG[werktijd];return [
-    {o:"Gezag",st:g.state,stl:g.label,bron:"jurisprudentie",bw:g.bewijs,bwB:g.bwB,aB:g.aB,aT:g.aT,feit:g.feit,br:"Holistische weging arbeidsrelatie (o.a. Uber/Deliveroo)",act:"Bewijs vastleggen"},
-    {o:"Organisatorische inbedding",st:"part",stl:"Deels bekend",bron:"wet",bw:"✗ ontbreekt",bwB:"miss",aB:"open",aT:"open vraag",feit:"Werkt in team De Linden, eigen kleding/telefoon",br:"Art. 7:610 BW — inbedding als indicator",act:"Aanvullen inbedding"},
-    {o:"Ondernemerschap",st:"full",stl:"Bekend",bron:"beleid",bw:"✓ KvK + meerdere opdrachten",bwB:"ok",aB:"neutral",aT:"—",feit:"Ingeschreven KvK, factureert 3 opdrachtgevers",br:"Beleidsregels beoordeling arbeidsrelatie",act:"—"},
-    {o:"Vervanging",st:"none",stl:"Onbekend",bron:"—",bw:"✗ ontbreekt",bwB:"miss",aB:"open",aT:"open vraag",feit:"Onbekend of vervanging is toegestaan",br:"Vrije vervangbaarheid als contra-indicator",act:"Vraag beantwoorden"},
-    {o:"Ondernemersrisico",st:"full",stl:"Bekend",bron:"jurisprudentie",bw:"✓ eigen BAV (verlopen)",bwB:"open",aB:"neutral",aT:"—",feit:"Draagt eigen aansprakelijkheid; BAV-polis verlopen",br:"Ondernemersrisico als indicator",act:"BAV vernieuwen"},
-    {o:"Meerdere opdrachtgevers",st:"full",stl:"Bekend",bron:"beleid",bw:"✓ facturen",bwB:"ok",aB:"neutral",aT:"—",feit:"3 opdrachtgevers in 12 maanden",br:"Meerdere opdrachtgevers als indicator",act:"—"},
-    {o:"Eigen materialen",st:"full",stl:"Bekend",bron:"—",bw:"✓ verklaring",bwB:"ok",aB:"neutral",aT:"—",feit:"Gebruikt eigen telefoon en vervoer",br:"Eigen bedrijfsmiddelen als indicator",act:"—"},
-    {o:"Contractvorm",st:"full",stl:"Bekend",bron:"wet",bw:"✓ modelovereenkomst",bwB:"ok",aB:"neutral",aT:"—",feit:"Goedgekeurde modelovereenkomst v1",br:"Kwalificatie o.b.v. feitelijke uitvoering, niet enkel papier",act:"—"},
-    {o:"Duur",st:"full",stl:"Bekend",bron:"beleid",bw:"✓ engagement",bwB:"ok",aB:"neutral",aT:"—",feit:"12 maanden, geen eerdere verlengingen",br:"Duur/continuïteit als indicator",act:"—"},
-    {o:"Exclusiviteit",st:"full",stl:"Bekend",bron:"jurisprudentie",bw:"✓ contract",bwB:"ok",aB:"neutral",aT:"—",feit:"Geen exclusiviteitsbeding",br:"Exclusiviteit als indicator",act:"—"}
-  ];}
-  function renderNav(){
-    var body=$("#navbody"); body.innerHTML="";
-    navRows().forEach(function(r){
-      var tr=document.createElement("tr"); tr.className="head-row"; tr.tabIndex=0; tr.setAttribute("aria-expanded","false");
-      tr.innerHTML='<td><b>'+r.o+'</b></td><td><span class="state"><span class="g '+r.st+'"></span>'+r.stl+'</span></td>'+
-        '<td><span class="src">'+r.bron+'</span></td><td><span class="badge '+r.bwB+'">'+r.bw+'</span></td>'+
-        '<td><span class="badge '+r.aB+'">'+r.aT+'</span></td>';
-      var det=document.createElement("tr"); det.className="detail";
-      det.innerHTML='<td colspan="5"><div class="chain"><div class="step"><b>Feit</b>'+r.feit+'</div>'+
-        '<div class="step"><b>Bron</b>'+r.br+'</div><div class="step"><b>Bewijs</b>'+r.bw+'</div>'+
-        '<div class="step"><b>Open actie</b>'+(r.act==="—"?"geen":r.act)+'</div></div></td>';
-      function tgl(){var open=det.classList.toggle("show");tr.setAttribute("aria-expanded",open?"true":"false");}
-      tr.addEventListener("click",tgl);
-      tr.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();tgl();}});
-      body.appendChild(tr); body.appendChild(det);
-    });
-  }
-  renderNav();
+var werktijd="vrij";
+function decoupleText(){return werktijd==="og"
+  ? (LANG==="nl"?"U wijzigde een <b>feitelijk</b> kenmerk (werktijden). Financieel effect: <b>verwaarloosbaar</b>. In de Regie Navigator is <b>‘Gezag’</b> nu een aandachtspunt.":"You changed a <b>factual</b> element (working hours). Financial effect: <b>negligible</b>. In the Governance Navigator <b>‘Authority’</b> is now an attention point.")
+  : UI[LANG]["decouple.default"];}
+function setWerktijd(w){werktijd=w; pressGroup("#wt-vrij,#wt-og", w==="vrij"?$("#wt-vrij"):$("#wt-og")); renderNav(); renderCockpit(); $("#decouple").innerHTML=decoupleText();}
 
-  var ACTIONS=[
-    {t:"Bewijs opvragen: BAV-polis (verlopen)",why:"uit: Ondernemersrisico",who:"aan zelfstandige",btn:"Verzoek sturen"},
-    {t:"Open vraag beantwoorden: vervanging toegestaan?",why:"uit: Vervanging",who:"aan opdrachtgever",btn:"Beantwoorden"},
-    {t:"Herbeoordeling inplannen (termijn verlopen)",why:"uit: tijdlijn",who:"aan jurist",btn:"Inplannen"}
-  ];
-  var ah=$("#actions");
-  ACTIONS.forEach(function(a){
-    var d=document.createElement("div"); d.className="action";
-    d.innerHTML='<div><div>'+a.t+'</div><div class="why">'+a.why+'</div></div><span class="who">'+a.who+'</span><button class="btn ghost">'+a.btn+'</button>';
-    d.querySelector("button").addEventListener("click",function(){showToast("Actie gestart: "+a.t+" — vastgelegd in auditspoor");});
-    ah.appendChild(d);
-  });
+/* ---------- taal ---------- */
+function updateKlabel(){$("#k-label").textContent=L(LABELS[$("#persp").value]);}
+function setLang(l){
+ LANG=l; $("#lang-nl").setAttribute("aria-pressed",l==="nl"?"true":"false"); $("#lang-en").setAttribute("aria-pressed",l==="en"?"true":"false");
+ applyStatic(); updateKlabel();
+ renderCockpit(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit();
+ $("#decouple").innerHTML=decoupleText();
+}
 
-  var EVENTS=[
-    {pos:8,type:"time",when:"nu",cap:"VOG geldig"},{pos:26,type:"time",when:"+2 mnd",cap:"Herbeoordeling"},
-    {pos:40,type:"event",when:"+3 mnd",cap:"Nieuw arrest [DEMO]"},{pos:58,type:"time",when:"+7 mnd",cap:"BAV-polis verloopt"},
-    {pos:74,type:"time",when:"+10 mnd",cap:"Contract verloopt"},{pos:90,type:"event",when:"+12 mnd",cap:"Tariefindexatie"}
-  ];
-  var axis=$("#axis");
-  EVENTS.forEach(function(e){var m=document.createElement("div");m.className="mk";m.style.left=e.pos+"%";
-    m.innerHTML='<div class="when">'+e.when+'</div><div class="pin '+e.type+'"></div><div class="cap">'+e.cap+'</div>';axis.appendChild(m);});
+/* ---------- toast ---------- */
+var tEl,tTimer;
+function toast(msg){tEl=tEl||$("#toast");tEl.textContent=msg;tEl.classList.add("show");clearTimeout(tTimer);tTimer=setTimeout(function(){tEl.classList.remove("show");},2600);}
 
-  var toast=$("#toast"), tTimer;
-  function showToast(msg){toast.textContent=msg;toast.classList.add("show");clearTimeout(tTimer);tTimer=setTimeout(function(){toast.classList.remove("show");},2600);}
-  $("#commit").addEventListener("click",function(){
-    var keuze=$(".opts .opt[aria-pressed='true']").textContent.trim();
-    var reason=$("#reason").value.trim();
-    var entry=document.createElement("div"); entry.className="entry";
-    entry.innerHTML='<span class="t num">vandaag</span> Besluit vastgelegd: <b>'+keuze+'</b> — genomen ondanks 2 open vragen'+(reason?' · “'+reason+'”':'')+' — u';
-    $("#audit").appendChild(entry); $("#s-besluit").textContent=keuze+" (vandaag)";
-    showToast("Beslissing “"+keuze+"” vastgelegd in het auditspoor"); $("#reason").value="";
-  });
+/* ---------- events ---------- */
+$("#theme").addEventListener("click",function(){var c=document.documentElement.getAttribute("data-theme");document.documentElement.setAttribute("data-theme",c==="dark"?"light":(c==="light"?"dark":(matchMedia("(prefers-color-scheme:dark)").matches?"light":"dark")));});
+$("#lang-nl").addEventListener("click",function(){setLang("nl");});
+$("#lang-en").addEventListener("click",function(){setLang("en");});
+$$(".tab").forEach(function(t){t.addEventListener("click",function(){$$(".tab").forEach(function(x){x.setAttribute("aria-selected","false");});t.setAttribute("aria-selected","true");$$(".world").forEach(function(w){w.classList.toggle("active",w.id===t.dataset.w);});});});
+$("#persp").addEventListener("change",updateKlabel);
+["tarief","uren","loop","idx"].forEach(function(id){$("#"+id).addEventListener("input",recompute);});
+$("#wt-vrij").addEventListener("click",function(){setWerktijd("vrij");});
+$("#wt-og").addEventListener("click",function(){setWerktijd("og");});
+$$(".opts .opt").forEach(function(o){o.addEventListener("click",function(){pressGroup(".opts .opt",o);});});
+var scenCount=0;
+$("#save-scen").addEventListener("click",function(){scenCount++;var name=String.fromCharCode(64+scenCount),v=vals(),c=calc(v);var el=document.createElement("div");el.className="scen";el.innerHTML='<div class="n">Scenario '+name+'</div><div class="t num">'+fmt.format(Math.round(c.total))+' · €'+v.tarief+'/u · '+v.uren+'u · '+v.loop+'m</div><button data-copy>'+(LANG==="nl"?"Kopiëren":"Copy")+'</button>';el.querySelector("[data-copy]").addEventListener("click",function(){$("#tarief").value=v.tarief;$("#uren").value=v.uren;$("#loop").value=v.loop;$("#idx").value=v.idx;recompute();toast(L(T.copied));});$("#saved").appendChild(el);toast(L(T.saved));});
+$("#cmp-scen").addEventListener("click",function(){var n=$$("#saved .scen").length;toast(n<2?L(T.cmp0):L(T.cmp)+" ("+n+")");});
+$("#commit").addEventListener("click",function(){var keuze=$(".opts .opt[aria-pressed='true']").textContent.trim();var reason=$("#reason").value.trim();auditExtra.push({t:L(T.vandaag),a:(LANG==="nl"?"Besluit vastgelegd: ":"Decision recorded: ")+"<b>"+keuze+"</b> — "+L(T.ondanks)+(reason?" · “"+reason+"”":"")});renderAudit();$("#reason").value="";toast(L(T.besluit)+"“"+keuze+"”");});
+
+recompute();
+setLang("nl");
 })();
