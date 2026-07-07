@@ -19,6 +19,7 @@ var UI={
   "nav.hint":"Klik een onderwerp voor “Waar blijkt dit uit?” — feit, bron, URL, opgehaald op, bewijs, actie.",
   "th.onderwerp":"Onderwerp","th.feiten":"Feiten bekend","th.bron":"Bron","th.bewijs":"Bewijs","th.aandacht":"Aandacht",
   "nav.noverdict":"Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.",
+  "wet.tab":"Wetgeving","wet.q":"Waar volgt dit uit?","wet.intro":"Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.","wet.norms":"Toepasselijke regelgeving","wet.onderbouwt":"Onderbouwt",
   "bron.title":"Bronnen","mon.title":"Bronmonitor","mon.demo":"[DEMO] bronmonitoring gesimuleerd — geen echte scraping.",
   "w3.intro":"Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.",
   "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
@@ -39,6 +40,7 @@ var UI={
   "nav.hint":"Click a topic for “How is this evidenced?” — fact, source, URL, retrieved on, evidence, action.",
   "th.onderwerp":"Topic","th.feiten":"Facts known","th.bron":"Source","th.bewijs":"Evidence","th.aandacht":"Attention",
   "nav.noverdict":"No verdict, no score, no “green = safe”. Only: what is known, how it is evidenced, and what is missing.",
+  "wet.tab":"Legislation","wet.q":"What does this follow from?","wet.intro":"What the assessment rests on — current law, policy, case law, guidance and upcoming legislation. Every finding follows from an identifiable, monitored source. No verdict, but traceability.","wet.norms":"Applicable legislation","wet.onderbouwt":"Substantiates",
   "bron.title":"Sources","mon.title":"Source monitor","mon.demo":"[DEMO] source monitoring simulated — no real scraping.",
   "w3.intro":"Governance: actions, decision and recording. The decision is a consequence, not a separate island.",
   "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
@@ -99,6 +101,16 @@ var MONITOR=[
  {c:"chg",t:{nl:"Bron gewijzigd sinds vorige beoordeling — wetten.overheid.nl",en:"Source changed since last assessment — wetten.overheid.nl"},w:{nl:"2 dgn",en:"2 days"}},
  {c:"err",t:{nl:"Bron tijdelijk niet bereikbaar — rechtspraak.nl",en:"Source temporarily unreachable — rechtspraak.nl"},w:{nl:"1 dg",en:"1 day"}},
  {c:"chk",t:{nl:"Hercontrole nodig — jurisprudentie ouder dan 90 dagen",en:"Re-check needed — case law older than 90 days"},w:{nl:"—",en:"—"}}
+];
+var NTYPE={wet:{nl:"Wet",en:"Law"},beleid:{nl:"Beleid",en:"Policy"},juris:{nl:"Jurisprudentie",en:"Case law"},handreiking:{nl:"Handreiking",en:"Guidance"},aankomend:{nl:"Aankomend",en:"Upcoming"}};
+var MSTAT2={actueel:{nl:"actueel",en:"current",b:"ok"},gewijzigd:{nl:"gewijzigd sinds vorige beoordeling",en:"changed since last assessment",b:"open"},controleren:{nl:"opnieuw controleren",en:"re-check",b:"open"},voorbereiding:{nl:"in voorbereiding",en:"in preparation",b:"neutral"}};
+var NORMS=[
+ {t:{nl:"Wet DBA — kader arbeidsrelaties",en:"DBA Act — employment-relationship framework"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Kwalificatie arbeidsrelatie",en:"Qualification of the relationship"}},
+ {t:{nl:"BW art. 7:610 — arbeidsovereenkomst",en:"Civil Code art. 7:610 — employment contract"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Gezag, inbedding",en:"Authority, embedding"}},
+ {t:{nl:"Beleidsregels beoordeling arbeidsrelaties",en:"Policy rules on assessing employment relationships"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",mon:"gewijzigd",ob:{nl:"Handhaving, ondernemerschap",en:"Enforcement, entrepreneurship"}},
+ {t:{nl:"Jurisprudentie — holistische weging (o.a. Uber/Deliveroo)",en:"Case law — holistic weighing (e.g. Uber/Deliveroo)"},type:"juris",url:"https://www.rechtspraak.nl",opg:"2 apr 2026",mon:"controleren",ob:{nl:"Gezag, geen rangorde",en:"Authority, no hierarchy"}},
+ {t:{nl:"Handreiking Belastingdienst",en:"Belastingdienst guidance"},type:"handreiking",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",mon:"actueel",ob:{nl:"Praktijktoetsing",en:"Practical assessment"}},
+ {t:{nl:"WTTA — wet in voorbereiding",en:"WTTA — legislation in preparation"},type:"aankomend",url:"https://www.rijksoverheid.nl",opg:"6 jul 2026",mon:"voorbereiding",ob:{nl:"Toekomstige impact — monitoren",en:"Future impact — monitor"}}
 ];
 var ACTIONS=[
  {t:{nl:"Bewijs opvragen: BAV-polis (verlopen)",en:"Request evidence: liability insurance (expired)"},why:{nl:"uit: Ondernemersrisico",en:"from: Business risk"},who:{nl:"aan zelfstandige",en:"to contractor"},btn:{nl:"Verzoek sturen",en:"Send request"}},
@@ -168,6 +180,16 @@ function renderSources(){
 function renderMonitor(){
  $("#monitor").innerHTML=MONITOR.map(function(m){return '<div class="mon '+m.c+'"><span class="ic"></span><span>'+L(m.t)+'</span><span class="when">'+L(m.w)+'</span></div>';}).join("");
 }
+function renderNorms(){
+ $("#norms").innerHTML=NORMS.map(function(n){
+  var url=n.url?'<a href="'+n.url+'" target="_blank" rel="noopener">'+n.url+'</a>':'';
+  var ms=MSTAT2[n.mon];
+  return '<div class="srccard"><div class="t">'+L(n.t)+' <span class="badge neutral">'+L(NTYPE[n.type])+'</span> <span class="demo">[DEMO]</span></div>'+
+   '<div class="meta">'+UI[LANG]["wet.onderbouwt"]+': '+L(n.ob)+'</div>'+
+   '<div class="row"><span>'+url+'</span><span class="badge '+ms.b+'">'+L(ms)+'</span></div>'+
+   '<div class="meta">'+UI[LANG]["src.opgehaald"]+' '+n.opg+'</div></div>';
+ }).join("");
+}
 function renderActions(){
  $("#actions").innerHTML="";
  ACTIONS.forEach(function(a){
@@ -205,7 +227,7 @@ function updateKlabel(){$("#k-label").textContent=L(LABELS[$("#persp").value]);}
 function setLang(l){
  LANG=l; $("#lang-nl").setAttribute("aria-pressed",l==="nl"?"true":"false"); $("#lang-en").setAttribute("aria-pressed",l==="en"?"true":"false");
  applyStatic(); updateKlabel();
- renderCockpit(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit();
+ renderCockpit(); renderNorms(); renderNav(); renderSources(); renderMonitor(); renderActions(); renderBasis(); renderAudit();
  $("#decouple").innerHTML=decoupleText();
 }
 

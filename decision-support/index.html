@@ -47,6 +47,8 @@
 <nav class="tabs" role="tablist" aria-label="Werelden"><div class="wrap">
   <button class="tab" role="tab" aria-selected="true" data-w="w1">
     <span data-i18n="w1.tab">Scenario</span><span class="q" data-i18n="w1.q">Wat verandert er?</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-w="wwet">
+    <span data-i18n="wet.tab">Wetgeving</span><span class="q" data-i18n="wet.q">Waar volgt dit uit?</span></button>
   <button class="tab" role="tab" aria-selected="false" data-w="w2">
     <span data-i18n="w2.tab">Regie Navigator</span><span class="q" data-i18n="w2.q">Waar blijkt dit uit?</span></button>
   <button class="tab" role="tab" aria-selected="false" data-w="w3">
@@ -95,6 +97,26 @@
     </div>
   </section>
 
+  <!-- WERELD — WETGEVING (onderscheidend vermogen: waar volgt dit uit?) -->
+  <section class="world" id="wwet" role="tabpanel">
+    <p class="hint" data-i18n="wet.intro">Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.</p>
+    <div class="card">
+      <h3 data-i18n="wet.norms">Toepasselijke regelgeving</h3>
+      <div id="norms"></div>
+    </div>
+    <div class="grid2" style="margin-top:24px;">
+      <div class="card">
+        <h3 data-i18n="bron.title">Bronnen</h3>
+        <div id="sources"></div>
+      </div>
+      <div class="card monitor">
+        <h3 data-i18n="mon.title">Bronmonitor</h3>
+        <div class="mon-demo" data-i18n="mon.demo">[DEMO] bronmonitoring gesimuleerd — geen echte scraping.</div>
+        <div id="monitor"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- WERELD 2 — REGIE NAVIGATOR -->
   <section class="world" id="w2" role="tabpanel">
     <div class="card">
@@ -113,17 +135,6 @@
       <p class="no-verdict" data-i18n="nav.noverdict">Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.</p>
     </div>
 
-    <div class="grid2" style="margin-top:24px;">
-      <div class="card">
-        <h3 data-i18n="bron.title">Bronnen</h3>
-        <div id="sources"></div>
-      </div>
-      <div class="card monitor">
-        <h3 data-i18n="mon.title">Bronmonitor</h3>
-        <div class="mon-demo" data-i18n="mon.demo">[DEMO] bronmonitoring gesimuleerd — geen echte scraping.</div>
-        <div id="monitor"></div>
-      </div>
-    </div>
   </section>
 
   <!-- WERELD 3 — REGIE -->
