@@ -19,7 +19,7 @@ var UI={
   "nav.hint":"Klik een onderwerp voor “Waar blijkt dit uit?” — feit, bron, URL, opgehaald op, bewijs, actie.",
   "th.onderwerp":"Onderwerp","th.feiten":"Feiten bekend","th.bron":"Bron","th.bewijs":"Bewijs","th.aandacht":"Aandacht",
   "nav.noverdict":"Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.",
-  "wet.tab":"Wetgeving","wet.q":"Waar volgt dit uit?","wet.intro":"Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.","wet.norms":"Toepasselijke regelgeving","wet.onderbouwt":"Onderbouwt","jur.tab":"Jurisprudentie","jur.q":"Welke uitspraken raken dit?","jur.intro":"Deze jurisprudentie ondersteunt het beoordelingskader, maar FlexCare neemt geen rechterlijk oordeel over. Geen overclaim — wel herleidbaarheid naar de gezichtspunten.","jur.cases":"Relevante uitspraken en lijnen","jur.principe":"Juridisch principe","jur.gezicht":"Gezichtspunten","jur.impact":"Impact op beoordeling","jur.relfeit":"Relatie met dossierfeit","jur.relnorm":"Relatie met norm","evi.volgtjur":"Volgt uit (jurisprudentie)",
+  "wet.tab":"Wetgeving","wet.q":"Waar volgt dit uit?","wet.intro":"Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.","wet.norms":"Toepasselijke regelgeving","wet.onderbouwt":"Onderbouwt","jur.tab":"Jurisprudentie","jur.q":"Welke uitspraken raken dit?","jur.intro":"Deze jurisprudentie ondersteunt het beoordelingskader, maar FlexCare neemt geen rechterlijk oordeel over. Geen overclaim — wel herleidbaarheid naar de gezichtspunten.","jur.cases":"Relevante uitspraken en lijnen","jur.principe":"Juridisch principe","jur.gezicht":"Gezichtspunten","jur.impact":"Impact op beoordeling","jur.relfeit":"Relatie met dossierfeit","jur.relnorm":"Relatie met norm","evi.volgtjur":"Volgt uit (jurisprudentie)","evi.herkomst":"Herkomst feit","evi.betrouw":"Betrouwbaarheid","evi.onzeker":"Onzekerheid","evi.controle":"Aanbevolen menselijke controle",
   "bron.title":"Bronnen","mon.title":"Bronmonitor","mon.demo":"[DEMO] bronmonitoring gesimuleerd — geen echte scraping.","mon.act":"Herbeoordeling aanmaken",
   "w3.intro":"Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.",
   "acties.title":"Acties","besluit.title":"Besluit — waarop rust mijn keuze?","opt.verlengen":"Verlengen","opt.beeindigen":"Beëindigen","opt.herzien":"Herzien","opt.aanhouden":"Aanhouden",
@@ -40,7 +40,7 @@ var UI={
   "nav.hint":"Click a topic for “How is this evidenced?” — fact, source, URL, retrieved on, evidence, action.",
   "th.onderwerp":"Topic","th.feiten":"Facts known","th.bron":"Source","th.bewijs":"Evidence","th.aandacht":"Attention",
   "nav.noverdict":"No verdict, no score, no “green = safe”. Only: what is known, how it is evidenced, and what is missing.",
-  "wet.tab":"Legislation","wet.q":"What does this follow from?","wet.intro":"What the assessment rests on — current law, policy, case law, guidance and upcoming legislation. Every finding follows from an identifiable, monitored source. No verdict, but traceability.","wet.norms":"Applicable legislation","wet.onderbouwt":"Substantiates","jur.tab":"Case law","jur.q":"Which rulings touch this?","jur.intro":"This case law supports the assessment framework, but FlexCare does not take over a court's judgment. No overclaim — but traceability to the viewpoints.","jur.cases":"Relevant rulings and lines","jur.principe":"Legal principle","jur.gezicht":"Viewpoints","jur.impact":"Impact on assessment","jur.relfeit":"Relation to case fact","jur.relnorm":"Relation to norm","evi.volgtjur":"Follows from (case law)",
+  "wet.tab":"Legislation","wet.q":"What does this follow from?","wet.intro":"What the assessment rests on — current law, policy, case law, guidance and upcoming legislation. Every finding follows from an identifiable, monitored source. No verdict, but traceability.","wet.norms":"Applicable legislation","wet.onderbouwt":"Substantiates","jur.tab":"Case law","jur.q":"Which rulings touch this?","jur.intro":"This case law supports the assessment framework, but FlexCare does not take over a court's judgment. No overclaim — but traceability to the viewpoints.","jur.cases":"Relevant rulings and lines","jur.principe":"Legal principle","jur.gezicht":"Viewpoints","jur.impact":"Impact on assessment","jur.relfeit":"Relation to case fact","jur.relnorm":"Relation to norm","evi.volgtjur":"Follows from (case law)","evi.herkomst":"Fact provenance","evi.betrouw":"Reliability","evi.onzeker":"Uncertainty","evi.controle":"Recommended human check",
   "bron.title":"Sources","mon.title":"Source monitor","mon.demo":"[DEMO] source monitoring simulated — no real scraping.","mon.act":"Create re-assessment",
   "w3.intro":"Governance: actions, decision and recording. The decision is a consequence, not a separate island.",
   "acties.title":"Actions","besluit.title":"Decision — what does my choice rest on?","opt.verlengen":"Extend","opt.beeindigen":"End","opt.herzien":"Revise","opt.aanhouden":"Hold",
@@ -71,13 +71,26 @@ var CHANGE={vrij:{nl:"Belangrijkste wijziging: bron ‘Handreiking Belastingdien
 var GEZAG={
  vrij:{st:"full",stl:{nl:"Bekend",en:"Known"},bwB:"ok",bw:{nl:"✓ contract art. 4",en:"✓ contract art. 4"},aB:"neutral",aT:{nl:"—",en:"—"},
    feit:{nl:"Werktijden vrij te bepalen door de zelfstandige",en:"Working hours freely set by the contractor"},
-   ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"},url:"https://www.rechtspraak.nl",opg:"2 apr 2026",type:"juris"},
+   ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"},url:"https://www.rechtspraak.nl",opg:"2 apr 2026",type:"juris",
+   herkomst:{nl:"Contract art. 4",en:"Contract art. 4"},betrouw:{nl:"Hoog",en:"High"},onzeker:{nl:"Laag",en:"Low"},controle:{nl:"Nee",en:"No"}},
  og:{st:"part",stl:{nl:"Gewijzigd",en:"Changed"},bwB:"miss",bw:{nl:"✗ nog geen bewijs",en:"✗ no evidence yet"},aB:"open",aT:{nl:"open vraag",en:"open question"},
    feit:{nl:"Werktijden worden door de opdrachtgever bepaald",en:"Working hours are set by the client"},
-   ontbr:{nl:"bewijs van vrije invulling",en:"evidence of free discretion"},actie:{nl:"Bewijs vastleggen",en:"Record evidence"},url:"https://www.rechtspraak.nl",opg:"2 apr 2026",type:"juris"}
+   ontbr:{nl:"bewijs van vrije invulling",en:"evidence of free discretion"},actie:{nl:"Bewijs vastleggen",en:"Record evidence"},url:"https://www.rechtspraak.nl",opg:"2 apr 2026",type:"juris",
+   herkomst:{nl:"Interview — niet vastgelegd",en:"Interview — not recorded"},betrouw:{nl:"Laag",en:"Low"},onzeker:{nl:"Hoog",en:"High"},controle:{nl:"Ja — jurist",en:"Yes — lawyer"}}
+};
+var EVI={
+ "Organisatorische inbedding":{herkomst:{nl:"Werkplekobservatie",en:"Workplace observation"},betrouw:{nl:"Middel",en:"Medium"},onzeker:{nl:"Middel",en:"Medium"},controle:{nl:"Ja — jurist",en:"Yes — lawyer"}},
+ "Ondernemerschap":{herkomst:{nl:"KvK-register + facturen",en:"CoC register + invoices"},betrouw:{nl:"Hoog",en:"High"},onzeker:{nl:"Laag",en:"Low"},controle:{nl:"Nee",en:"No"}},
+ "Vervanging":{herkomst:{nl:"Onbekend — niet vastgelegd",en:"Unknown — not recorded"},betrouw:{nl:"—",en:"—"},onzeker:{nl:"Hoog",en:"High"},controle:{nl:"Ja — opdrachtgever",en:"Yes — client"}},
+ "Ondernemersrisico":{herkomst:{nl:"Polisadministratie",en:"Policy records"},betrouw:{nl:"Middel",en:"Medium"},onzeker:{nl:"Middel",en:"Medium"},controle:{nl:"Ja — dossierbeheer",en:"Yes — records mgmt"}},
+ "Meerdere opdrachtgevers":{herkomst:{nl:"Facturen",en:"Invoices"},betrouw:{nl:"Hoog",en:"High"},onzeker:{nl:"Laag",en:"Low"},controle:{nl:"Nee",en:"No"}},
+ "Eigen materialen":{herkomst:{nl:"Verklaring zelfstandige",en:"Contractor statement"},betrouw:{nl:"Middel",en:"Medium"},onzeker:{nl:"Middel",en:"Medium"},controle:{nl:"Nee",en:"No"}},
+ "Contractvorm":{herkomst:{nl:"Modelovereenkomst",en:"Model agreement"},betrouw:{nl:"Hoog",en:"High"},onzeker:{nl:"Laag",en:"Low"},controle:{nl:"Nee",en:"No"}},
+ "Duur":{herkomst:{nl:"Engagement-administratie",en:"Engagement records"},betrouw:{nl:"Hoog",en:"High"},onzeker:{nl:"Laag",en:"Low"},controle:{nl:"Nee",en:"No"}},
+ "Exclusiviteit":{herkomst:{nl:"Contract",en:"Contract"},betrouw:{nl:"Hoog",en:"High"},onzeker:{nl:"Laag",en:"Low"},controle:{nl:"Nee",en:"No"}}
 };
 function navRows(){var g=GEZAG[werktijd];return [
- {o:{nl:"Gezag",en:"Authority"},st:g.st,stl:g.stl,type:g.type,url:g.url,opg:g.opg,bwB:g.bwB,bw:g.bw,aB:g.aB,aT:g.aT,feit:g.feit,ontbr:g.ontbr,actie:g.actie},
+ {o:{nl:"Gezag",en:"Authority"},st:g.st,stl:g.stl,type:g.type,url:g.url,opg:g.opg,bwB:g.bwB,bw:g.bw,aB:g.aB,aT:g.aT,feit:g.feit,ontbr:g.ontbr,actie:g.actie,herkomst:g.herkomst,betrouw:g.betrouw,onzeker:g.onzeker,controle:g.controle},
  {o:{nl:"Organisatorische inbedding",en:"Organisational embedding"},st:"part",stl:{nl:"Deels bekend",en:"Partly known"},type:"wet",url:"https://wetten.overheid.nl",opg:"6 jul 2026",bwB:"miss",bw:{nl:"✗ ontbreekt",en:"✗ missing"},aB:"open",aT:{nl:"open vraag",en:"open question"},feit:{nl:"Werkt in team; eigen kleding/telefoon",en:"Works in a team; own clothing/phone"},ontbr:{nl:"functieomschrijving",en:"job description"},actie:{nl:"Aanvullen inbedding",en:"Complete embedding"}},
  {o:{nl:"Ondernemerschap",en:"Entrepreneurship"},st:"full",stl:{nl:"Bekend",en:"Known"},type:"beleid",url:"https://www.belastingdienst.nl",opg:"6 jul 2026",bwB:"ok",bw:{nl:"✓ KvK + 3 opdrachtgevers",en:"✓ CoC + 3 clients"},aB:"neutral",aT:{nl:"—",en:"—"},feit:{nl:"Ingeschreven KvK, factureert 3 opdrachtgevers",en:"Registered, invoices 3 clients"},ontbr:{nl:"geen",en:"none"},actie:{nl:"—",en:"—"}},
  {o:{nl:"Vervanging",en:"Substitution"},st:"none",stl:{nl:"Onbekend",en:"Unknown"},type:"none",url:"",opg:"—",bwB:"miss",bw:{nl:"✗ ontbreekt",en:"✗ missing"},aB:"open",aT:{nl:"open vraag",en:"open question"},feit:{nl:"Onbekend of vervanging is toegestaan",en:"Unknown whether substitution is allowed"},ontbr:{nl:"clausule/verklaring",en:"clause/statement"},actie:{nl:"Vraag beantwoorden",en:"Answer question"}},
@@ -169,6 +182,8 @@ function renderNav(){
   var volgt = nrm ? '<a href="#" class="norm-link" data-norm="'+nrm.id+'">'+L(nrm.t)+' →</a>' : '<span class="src">—</span>';
   var jr = JURLINK[r.o.nl] ? jurById(JURLINK[r.o.nl]) : null;
   var volgtj = jr ? '<a href="#" class="jur-link" data-jur="'+jr.id+'">'+L(jr.zaak)+' →</a>' : '<span class="src">—</span>';
+  var ex = EVI[r.o.nl]||{};
+  var herk=r.herkomst||ex.herkomst||{nl:"—",en:"—"}, bet=r.betrouw||ex.betrouw||{nl:"—",en:"—"}, onz=r.onzeker||ex.onzeker||{nl:"—",en:"—"}, ctrl=r.controle||ex.controle||{nl:"—",en:"—"};
   det.innerHTML='<td colspan="5"><div class="evi">'+
    '<div class="step"><b>'+UI[LANG]["evi.feit"]+'</b>'+L(r.feit)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.bron"]+'</b>'+L(TYPE[r.type])+'</div>'+
@@ -177,7 +192,11 @@ function renderNav(){
    '<div class="step"><b>'+UI[LANG]["evi.url"]+'</b>'+urlHtml+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.opgehaald"]+'</b>'+r.opg+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.bewijs"]+'</b>'+L(r.bw)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.herkomst"]+'</b>'+L(herk)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.betrouw"]+'</b>'+L(bet)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.onzeker"]+'</b>'+L(onz)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.ontbreekt"]+'</b>'+L(r.ontbr)+'</div>'+
+   '<div class="step"><b>'+UI[LANG]["evi.controle"]+'</b>'+L(ctrl)+'</div>'+
    '<div class="step"><b>'+UI[LANG]["evi.actie"]+'</b>'+L(r.actie)+'</div></div></td>';
   function tgl(){var open=det.classList.toggle("show"); tr.setAttribute("aria-expanded",open?"true":"false");}
   tr.addEventListener("click",tgl);
