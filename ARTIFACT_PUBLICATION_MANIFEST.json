@@ -1,0 +1,56 @@
+{
+  "product": "Borght Huisvestingsregie",
+  "repository": "https://github.com/Martijn977/borght-prototypes",
+  "branch": "main",
+  "commit": "e044186178fd46566b4f9798928b6d8ef93d16b6",
+  "publishedUrl": "https://martijn977.github.io/borght-prototypes/",
+  "testedAt": "2026-08-01",
+  "artifactType": "klikbare demonstratie (statische pagina, geen applicatie)",
+  "engineBoundary": {
+    "real": [],
+    "rebuilt": [
+      "scenario-score (scorekaart per belang)",
+      "belangconflicten",
+      "kantelpunt",
+      "claimtoets op de motivatie",
+      "bronbetrouwbaarheid en triangulatie",
+      "meetprofiel-oordeel",
+      "risicoscore"
+    ],
+    "presentationOnly": [
+      "intake en bewijsdekking",
+      "besluitdossier / rapportage",
+      "vastleggingsspoor (audit)",
+      "sponsor-akkoord",
+      "huisstijl-tokens"
+    ],
+    "notAvailable": [
+      "opslaan en heropenen",
+      "export / PDF",
+      "inloggen, tenants, rollen"
+    ]
+  },
+  "testedArtifacts": {
+    "decision-support/style.css": "sha256:172b0a99809e73a6",
+    "decision-support/app.js": "sha256:e28a364c56849da7"
+  },
+  "gates": {
+    "total": 23,
+    "passed": 23,
+    "testedAgainst": "publishedUrl",
+    "viewports": ["390x844", "768x1024", "1440x1000"]
+  },
+  "notTested": [
+    "andere browsers dan Chromium",
+    "toegankelijkheid",
+    "print/PDF",
+    "gelijkwaardigheid van de nabouw met de productengine",
+    "begrip door een menselijke lezer"
+  ],
+  "shareability": "BEGELEID DEELBAAR",
+  "notes": [
+    "Het veld commit verwijst naar de commit waarvan de inhoud is getest. Dit manifest en de bijbehorende documenten zijn in de daaropvolgende commit toegevoegd en wijzigen geen enkel getest bestand; dat is te controleren met git diff.",
+    "engineBoundary.real is leeg: de demonstratie importeert geen productcode en doet geen aanroep naar het product.",
+    "Een bezoeker die de pagina eerder opende kan door CDN-cache tijdelijk een oudere stylesheet zien."
+  ]
+}
