@@ -3,46 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <meta name="robots" content="noindex, nofollow">
-<title>Borght FlexCare — Prototypes</title>
+<meta name="description" content="Klikbare demonstratie van Borght Huisvestingsregie: besluitvorming over ruimte, gebruik en scenario's. Synthetische data.">
+<title>Borght Huisvestingsregie — demonstratie</title>
 <style>
-  :root{--navy:#002060;--navy-2:#1F4E79;--blue:#0069B4;--ink:#262626;--surface:#F7F7FA;
-    --card:#fff;--g500:#6B7280;--g200:#E3E5E9;--warn:#B8860B;--warn-bg:#FBF1DD;
-    --font:Calibri,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;--track:.10em;}
-  @media (prefers-color-scheme:dark){:root{--navy:#7FA8E0;--ink:#E7EAF0;--surface:#0E1420;
-    --card:#161E2E;--g500:#9BA5B4;--g200:#2A3446;--warn:#E0B84E;--warn-bg:#33290F;}}
-  *{box-sizing:border-box;} body{margin:0;font-family:var(--font);background:var(--surface);color:var(--ink);}
-  .bar{background:var(--navy);color:#fff;padding:16px 24px;font-size:18px;font-weight:700;}
-  @media (prefers-color-scheme:dark){.bar{background:#0A1120;}}
-  .wrap{max-width:820px;margin:0 auto;padding:32px 24px;}
-  h1{font-size:22px;margin:0 0 6px;color:var(--navy);} .sub{color:var(--g500);margin:0 0 28px;}
-  .warn{background:var(--warn-bg);border:1px solid var(--warn);color:var(--ink);border-radius:8px;
-    padding:12px 16px;font-size:13.5px;margin-bottom:28px;}
-  .lbl{font-size:11px;font-weight:700;letter-spacing:var(--track);text-transform:uppercase;color:var(--g500);}
-  .card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--g200);
-    border-radius:10px;padding:20px 22px;margin-bottom:14px;transition:box-shadow .15s;}
-  .card:hover{box-shadow:0 6px 20px rgba(0,32,96,.10);}
-  .card h2{font-size:17px;margin:4px 0 4px;color:var(--navy);} .card p{margin:0;color:var(--g500);font-size:14px;}
-  .card .arrow{float:right;color:var(--blue);font-weight:700;}
-  .foot{margin-top:28px;font-size:12.5px;color:var(--g500);}
+  /* Tokens uit src/styles/borght-tokens.css van Borght Huisvestingsregie (ADR-004). */
+  :root{
+    --navy:#01377B; --blue:#0069B4; --green:#8CC63F; --magenta:#E5088D;
+    --ink:#262626; --surface:#F7F7FA; --white:#FFFFFF;
+    --g700:#4A4A4A; --g400:#9AA0A6; --g200:#E3E5E9; --grey-bg:#EEF1F5;
+    --warning:#B8860B; --warning-bg:#FBF1DD;
+    --font:Calibri,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    --track-caps:.12em; --radius-md:8px; --radius-pill:999px;
+    --shadow-1:0 1px 2px rgba(1,55,123,.08); --shadow-2:0 4px 12px rgba(1,55,123,.10);
+  }
+  *{box-sizing:border-box;}
+  html{color-scheme:light;}
+  body{margin:0;font-family:var(--font);font-size:16px;line-height:1.6;color:var(--ink);background:var(--surface);-webkit-font-smoothing:antialiased;}
+  h1,h2{margin:0;text-wrap:balance;} p{margin:0;}
+  .bar{background:var(--navy);color:#fff;padding:14px 0;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px;}
+  .bar .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .merk{font-size:18px;font-weight:600;}
+  .merk small{display:block;font-size:12px;font-weight:400;opacity:.85;}
+  .chip{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+    border-radius:var(--radius-pill);padding:3px 10px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.5);color:#fff;}
+  main{padding:36px 0 56px;}
+  .eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:var(--track-caps);color:var(--navy);}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.3px;margin:4px 0 6px;}
+  .sub{color:var(--g700);margin-bottom:24px;}
+  .warn{background:var(--warning-bg);border:1px solid var(--warning);border-radius:var(--radius-md);
+    padding:14px 18px;font-size:14px;margin-bottom:28px;}
+  .warn b{font-weight:600;}
+  .kaart{display:block;text-decoration:none;color:inherit;background:var(--white);
+    border:1px solid var(--g200);border-left:4px solid var(--green);border-radius:var(--radius-md);
+    box-shadow:var(--shadow-1);padding:22px 24px;transition:box-shadow .15s;}
+  .kaart:hover{box-shadow:var(--shadow-2);}
+  .kaart:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
+  .kaart .lbl{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:var(--track-caps);color:var(--g700);}
+  .kaart h2{font-size:19px;font-weight:600;color:var(--navy);margin:4px 0 6px;}
+  .kaart p{font-size:14.5px;color:var(--g700);}
+  .kaart .pijl{float:right;color:var(--blue);font-weight:600;}
+  .stappen{margin:14px 0 0;padding-left:18px;font-size:13.5px;color:var(--g700);}
+  .herkomst{margin-top:28px;background:var(--grey-bg);border-radius:var(--radius-md);padding:16px 18px;font-size:13px;color:var(--g700);}
+  .herkomst dt{font-weight:600;color:var(--ink);float:left;width:150px;clear:left;}
+  .herkomst dd{margin:0 0 4px 158px;font-variant-numeric:tabular-nums;word-break:break-all;}
+  .voet{margin-top:24px;font-size:12.5px;color:var(--g700);}
 </style>
 </head>
 <body>
-  <div class="bar">Borght FlexCare · Prototypes</div>
-  <div class="wrap">
-    <h1>Goedgekeurde mock-ups</h1>
-    <p class="sub">Klikbare prototypes ter validatie. Altijd de meest recente versie.</p>
-    <div class="warn">Prototype-omgeving met <b>demodata</b> — geen echt dossier, geen juridische informatie.</div>
 
-    <a class="card" href="decision-support/">
-      <span class="arrow">Openen &rarr;</span>
-      <span class="lbl">FlexCare · Decision Support</span>
-      <h2>Scenario · Regie Navigator · Regie</h2>
-      <p>Drie werelden rond één opdracht, met managementsamenvatting als entree.</p>
-    </a>
+<div class="bar"><div class="wrap">
+  <span class="merk">Borght Huisvestingsregie<small>Borght Facility Management</small></span>
+  <span class="chip">Demonstratie</span>
+</div></div>
 
-    <p class="foot">Nieuwe goedgekeurde mock-ups verschijnen hier automatisch na publicatie.</p>
+<main><div class="wrap">
+  <div class="eyebrow">Demonstratieomgeving</div>
+  <h1>Besluitvorming over ruimte, gebruik en scenario&rsquo;s</h1>
+  <p class="sub">
+    Een klikbare demonstratie van de besluitreis: van vraagstuk naar een keuze die later
+    nog is uit te leggen.
+  </p>
+
+  <div class="warn">
+    <b>Wat dit is en niet is.</b> Dit is een <b>demonstratie</b>, geen werkende applicatie
+    en geen dossier. Er wordt niets opgeslagen en er is geen inlog. Alle organisaties,
+    getallen en bronnen zijn <b>verzonnen</b>. Onderdelen die de rekenregels van het product
+    <b>nabouwen</b> zijn in de demonstratie zelf als zodanig gemarkeerd; ze gelden niet als
+    bewijs van het product. Er worden hier geen uitspraken gedaan over beveiliging, privacy
+    of productiegereedheid.
   </div>
+
+  <a class="kaart" href="decision-support/">
+    <span class="pijl">Openen &rarr;</span>
+    <span class="lbl">Besluitondersteuning</span>
+    <h2>Van huisvestingsvraagstuk naar verdedigbaar besluit</h2>
+    <p>
+      Negen stappen rond &eacute;&eacute;n fictief vraagstuk, met bovenaan het antwoord op de
+      bestuurdersvraag: waarop steunt dit advies, en waar breekt het?
+    </p>
+    <ol class="stappen">
+      <li>Intake &middot; Scenario&rsquo;s &middot; Onderbouwing</li>
+      <li>Alternatieven &middot; Onzekerheden &middot; Kantelpunt</li>
+      <li>Besluit &middot; Bewijs &middot; Vervolgstap</li>
+    </ol>
+  </a>
+
+  <dl class="herkomst">
+    <dt>Versie</dt><dd id="versie">zie ARTIFACT_PUBLICATION_MANIFEST.json</dd>
+    <dt>Herkomst</dt><dd>Borght Facility Management &mdash; zelfstandig product</dd>
+    <dt>Gegevens</dt><dd>uitsluitend synthetisch; geen persoonsgegevens</dd>
+  </dl>
+
+  <p class="voet">
+    Deze omgeving bevat uitsluitend materiaal van Borght Huisvestingsregie. Andere producten
+    van Borght worden hier niet getoond en zijn er niet aan gekoppeld.
+  </p>
+</div></main>
+
 </body>
 </html>

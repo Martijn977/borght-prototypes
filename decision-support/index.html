@@ -3,203 +3,400 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <meta name="robots" content="noindex, nofollow">
-<title>FlexCare — Decision Support (mock-up)</title>
+<meta name="description" content="Interactieve mock-up van de besluitreis van Borght Huisvestingsregie. Synthetische demodata.">
+<title>Borght Huisvestingsregie — Besluitondersteuning (mock-up)</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="topbar"><div class="wrap">
-  <span class="brand">Borght FlexCare</span>
-  <span class="demo-badge" data-i18n="demo">Mock-up · demodata</span>
+  <span class="brand">Borght Huisvestingsregie<small>Borght Facility Management</small></span>
+  <span class="chip chip-mock">Mock-up</span>
+  <span class="chip chip-fictief">Fictieve data</span>
   <span class="spacer"></span>
-  <div class="lang" role="group" aria-label="Taal / Language">
-    <button id="lang-nl" class="lang-btn" aria-pressed="true">NL</button>
-    <button id="lang-en" class="lang-btn" aria-pressed="false">EN</button>
-  </div>
-  <button class="theme-btn" id="theme" aria-label="Thema">☾</button>
+  <span class="fijn" style="color:rgba(255,255,255,.85)">Peildatum inhoud: 31-07-2026</span>
 </div></header>
+
+<div class="claimbar"><div class="wrap">
+  <span class="kop">Wat dit niet is</span>
+  <p>
+    Dit is een <b>klikbare mock-up</b>, geen werkende applicatie en geen dossier. Alle organisaties,
+    getallen, bronnen en uitkomsten zijn <b>verzonnen</b>. Het onderliggende product staat op releasepoort
+    <b>“A — demonstrabel, niet pilotwaardig”</b>. Tenant-isolatie is op de databaselaag en op het
+    sessie-gebonden requestpad runtime gemeten, maar de poort is <b>versmald, niet gesloten</b>: voor de
+    token-gebonden paden en voor de reproduceerbaarheid van dat bewijs noemt de onafhankelijke
+    appsec-toetsing sluiten letterlijk <b>“niet verdedigbaar”</b>. Daarnaast staat de eis van een
+    <b>verificatie vóór een sponsor-akkoord</b> als harde poort <b>open</b>. Deze mock-up doet daarom
+    <b>geen enkele uitspraak</b> over beveiliging, privacy of productiegereedheid.
+  </p>
+  <p style="margin-top:8px">
+    <b>Het rekenwerk is nabouw.</b> De scorekaart, het kantelpunt, de motivatietoets en het
+    meetoordeel zijn hier <b>nagebouwd</b> uit de gepubliceerde regels van het product; het is niet
+    de code van het product en roept die ook niet aan. Wat u ziet is dus aannemelijk productgedrag,
+    <b>geen bewijs</b> van de echte engine. De grens per onderdeel staat in
+    <code>ARTIFACT_ENGINE_BOUNDARY.md</code>.
+  </p>
+</div></div>
 
 <div class="context"><div class="wrap">
   <div>
-    <div class="opdracht-title" data-i18n="opdracht.title">Opdracht · Wijkverpleging</div>
-    <div class="opdracht-sub">A. Bakker · Zorginstelling De Linden · <span data-i18n="opdracht.since">loopt sinds feb 2026</span></div>
-  </div>
-  <div class="persp">
-    <span class="lbl" data-i18n="perspectief">Perspectief</span>
-    <select id="persp" aria-label="Perspectief">
-      <option value="og" data-i18n="persp.og">Opdrachtgever</option>
-      <option value="on" data-i18n="persp.on">Opdrachtnemer</option>
-      <option value="im" data-i18n="persp.im">Intermediair</option>
-      <option value="ac" data-i18n="persp.ac">Accountant</option>
-      <option value="ju" data-i18n="persp.ju">Jurist</option>
-    </select>
+    <div class="eyebrow">Huisvestingsvraagstuk · fictief voorbeeld</div>
+    <h1>Demo Zorggroep Vlierhof <span class="fijn">(fictief)</span></h1>
+    <div class="meta">
+      Hoofdlocatie · ± 220 medewerkers · hybride 2–3 dagen · vraagstuk geopend feb 2026 ·
+      status: <b>concept, geen besluit vastgelegd</b>
+    </div>
   </div>
 </div></div>
 
-<!-- MANAGEMENTCOCKPIT (persistent, boven de werelden) -->
-<div class="cockpit-band"><div class="wrap">
-  <div class="cockpit" id="cockpit"><!-- tiles via JS --></div>
-  <div class="change" id="change"><!-- belangrijkste wijziging via JS --></div>
-</div></div>
+<!-- ====================== DE 1-MINUUTLAAG ====================== -->
+<section class="kern"><div class="wrap">
+  <h2>Waarop steunt dit advies — en waar breekt het?</h2>
+  <p class="onderkop" id="kern-antwoord"></p>
+  <div class="tiles" id="kern-tiles"></div>
+</div></section>
 
-<nav class="tabs" role="tablist" aria-label="Werelden"><div class="wrap">
-  <button class="tab" role="tab" aria-selected="true" data-w="w1">
-    <span data-i18n="w1.tab">Scenario</span><span class="q" data-i18n="w1.q">Wat verandert er?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="wwet">
-    <span data-i18n="wet.tab">Wetgeving</span><span class="q" data-i18n="wet.q">Waar volgt dit uit?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="wjur">
-    <span data-i18n="jur.tab">Jurisprudentie</span><span class="q" data-i18n="jur.q">Welke uitspraken raken dit?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="w2">
-    <span data-i18n="w2.tab">Regie Navigator</span><span class="q" data-i18n="w2.q">Waar blijkt dit uit?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="w3">
-    <span data-i18n="w3.tab">Regie</span><span class="q" data-i18n="w3.q">Wat doe ik nu?</span></button>
-  <button class="tab" role="tab" aria-selected="false" data-w="wdos">
-    <span data-i18n="dos.tab">Dossier</span><span class="q" data-i18n="dos.q">Controleklaar overzicht</span></button>
+<nav class="tabs" role="tablist" aria-label="Stappen in de besluitreis"><div class="wrap">
+  <button class="tab" role="tab" aria-selected="true"  data-stap="s1"><span class="stapnr">Stap 1</span><span class="naam">Intake</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s2"><span class="stapnr">Stap 2</span><span class="naam">Scenario’s</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s3"><span class="stapnr">Stap 3</span><span class="naam">Onderbouwing</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s4"><span class="stapnr">Stap 4</span><span class="naam">Alternatieven</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s5"><span class="stapnr">Stap 5</span><span class="naam">Onzekerheden</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s6"><span class="stapnr">Stap 6</span><span class="naam">Kantelpunt</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s7"><span class="stapnr">Stap 7</span><span class="naam">Besluit</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s8"><span class="stapnr">Stap 8</span><span class="naam">Bewijs</span></button>
+  <button class="tab" role="tab" aria-selected="false" data-stap="s9"><span class="stapnr">Stap 9</span><span class="naam">Vervolgstap</span></button>
 </div></nav>
 
 <main class="wrap">
 
-  <!-- WERELD 1 — SCENARIO -->
-  <section class="world active" id="w1" role="tabpanel">
-    <div class="grid2">
-      <div class="card">
-        <h3 data-i18n="w1.params">Parameters</h3>
-        <div class="fields">
-          <div class="field"><label class="lbl" data-i18n="f.tarief">Uurtarief (€)</label><input type="number" id="tarief" value="85" min="0"></div>
-          <div class="field"><label class="lbl" data-i18n="f.uren">Uren per week</label><input type="number" id="uren" value="24" min="0"></div>
-          <div class="field"><label class="lbl" data-i18n="f.loop">Looptijd (mnd)</label><input type="number" id="loop" value="12" min="1"></div>
-          <div class="field"><label class="lbl" data-i18n="f.idx">Indexatie (%)</label><input type="number" id="idx" value="3" min="0"></div>
-        </div>
-        <div style="margin-top:16px;">
-          <label class="lbl" data-i18n="f.werktijden">Werktijden (feitelijk kenmerk)</label>
-          <div class="seg" role="group">
-            <button id="wt-vrij" aria-pressed="true" data-i18n="wt.vrij">Vrij te bepalen</button>
-            <button id="wt-og" aria-pressed="false" data-i18n="wt.og">Door opdrachtgever</button>
-          </div>
-        </div>
-        <div class="scenctl">
-          <button class="btn" id="save-scen" data-i18n="scen.save">Opslaan als scenario</button>
-          <button class="btn ghost" id="cmp-scen" data-i18n="scen.cmp">Vergelijken</button>
-        </div>
-        <div class="saved" id="saved"></div>
-      </div>
-      <div class="card">
-        <div class="kpi"><span class="lbl" id="k-label">Totale investering</span><div class="v num" id="k-total">€ 106.080</div></div>
-        <div style="display:flex;gap:32px;">
-          <div class="kpi" style="border:none;"><span class="lbl" data-i18n="k.maand">Per maand</span><div class="v sub num" id="k-maand">€ 8.840</div></div>
-          <div class="kpi" style="border:none;"><span class="lbl" data-i18n="k.jaar">Per jaar</span><div class="v sub num" id="k-jaar">€ 106.080</div></div>
-        </div>
-        <div class="insight">
-          <h4 data-i18n="w1.echt">Wat verandert er écht?</h4>
-          <div class="lever"><span class="dot money"></span><div data-i18n="lever.money"><b>Financiële hefbomen</b> — tarief, uren, looptijd. Bewegen de opdrachtwaarde.</div></div>
-          <div class="lever"><span class="dot fact"></span><div data-i18n="lever.fact"><b>Feitelijke hefbomen</b> — werktijden, vervanging. Bewegen de <b>onderbouwing</b>, niet het geld.</div></div>
-          <div class="banner" id="decouple" data-i18n="decouple.default">Een hoger tarief verandert de opdrachtwaarde — maar <b>niets</b> aan gezag, vervanging of bewijs.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ---------- STAP 1 · INTAKE ---------- -->
+<section class="stap actief" id="s1" role="tabpanel" aria-label="Stap 1 — Intake">
+  <h2>Intake — de bewijsbasis</h2>
+  <p class="vraag">Waar gaat dit vraagstuk over, en welke fundamentblokken zijn onderbouwd?</p>
 
-  <!-- WERELD — WETGEVING (onderscheidend vermogen: waar volgt dit uit?) -->
-  <section class="world" id="wwet" role="tabpanel">
-    <p class="hint" data-i18n="wet.intro">Waar de beoordeling op steunt — actuele wet, beleid, jurisprudentie, handreikingen en aankomende regelgeving. Elke bevinding volgt uit een aanwijsbare, gemonitorde bron. Geen oordeel, wel herleidbaarheid.</p>
+  <div class="grid2">
     <div class="card">
-      <h3 data-i18n="wet.norms">Toepasselijke regelgeving</h3>
-      <div id="norms"></div>
-    </div>
-    <div class="grid2" style="margin-top:24px;">
-      <div class="card">
-        <h3 data-i18n="bron.title">Bronnen</h3>
-        <div id="sources"></div>
-      </div>
-      <div class="card monitor">
-        <h3 data-i18n="mon.title">Bronmonitor</h3>
-        <div class="mon-demo" data-i18n="mon.demo">[DEMO] bronmonitoring gesimuleerd — geen echte scraping.</div>
-        <div id="monitor"></div>
+      <h3>Onderzoeksvraag &amp; scope</h3>
+      <p class="fijn" id="intake-vraag"></p>
+      <div class="bron">
+        <span class="lbl">Herleidbaarheid</span>
+        Elke conclusie verderop verwijst terug naar een intakeveld, een scenario, een relatie,
+        een conflict of een impactregel.
       </div>
     </div>
-  </section>
-
-  <!-- WERELD — JURISPRUDENTIE (welke uitspraken raken dit?) -->
-  <section class="world" id="wjur" role="tabpanel">
-    <p class="hint" data-i18n="jur.intro">Deze jurisprudentie ondersteunt het beoordelingskader, maar FlexCare neemt geen rechterlijk oordeel over. Geen overclaim — wel herleidbaarheid naar de gezichtspunten.</p>
     <div class="card">
-      <h3 data-i18n="jur.cases">Relevante uitspraken en lijnen</h3>
-      <div id="juris"></div>
+      <h3>Bewijsdekking intake</h3>
+      <p class="hint" id="intake-dekking"></p>
+      <div id="intake-blokken"></div>
+      <div class="uitleg">
+        Een niet-ingevuld blok wordt niet stilzwijgend overgeslagen maar als
+        <b>“onvoldoende onderbouwing — niet ingevuld”</b> gemarkeerd. Ontbrekende gegevens blijven
+        zichtbaar tot ze zijn aangevuld.
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- WERELD 2 — REGIE NAVIGATOR -->
-  <section class="world" id="w2" role="tabpanel">
+  <div class="card">
+    <h3>Stakeholders en hun belang</h3>
+    <p class="hint">Elk doel hoort bij een partij. Er is geen enkelvoudig doel — er is een doelenlandschap.</p>
+    <div class="tabelwrap"><table id="stakeholders"></table></div>
+    <div class="nietgebouwd">
+      <span class="lbl">Bewust niet in deze mock-up</span>
+      Er staan geen persoonsnamen, functies, e-mailadressen of contactgegevens in. Stakeholders zijn
+      uitsluitend als <b>rol</b> weergegeven. In het product zijn dit vastgelegde records per project.
+    </div>
+  </div>
+</section>
+
+<!-- ---------- STAP 2 · SCENARIO'S ---------- -->
+<section class="stap" id="s2" role="tabpanel" aria-label="Stap 2 — Scenario's">
+  <h2>Scenario’s — wat is berekenbaar, en wat niet?</h2>
+  <p class="vraag">Drie handelingsopties, naast elkaar op vergelijkbare onderdelen.</p>
+
+  <div class="card">
+    <h3>Vergelijking per onderdeel</h3>
+    <p class="hint">
+      Waar een onderdeel op een nog niet gevalideerde norm rust, staat er géén getal maar de reden.
+      Een gat wordt niet met een aanname gevuld.
+    </p>
+    <div class="tabelwrap"><table id="scenariotabel"></table></div>
+    <div class="melding aandacht" id="rankbaar-melding" style="margin-top:16px"></div>
+  </div>
+
+  <div class="grid2">
     <div class="card">
-      <div class="tally">
-        <div><span class="big num">8/10</span> <span class="lbl" data-i18n="nav.onderbouwd">onderwerpen onderbouwd</span></div>
-        <div class="item"><b class="num">2</b> <span data-i18n="nav.open">open vragen</span></div>
-        <div class="item"><b class="num">3</b> <span data-i18n="nav.missing">bewijsstukken ontbreken</span></div>
-      </div>
-      <p class="hint" data-i18n="nav.hint">Klik een onderwerp voor “Waar blijkt dit uit?” — feit, bron, URL, opgehaald op, bewijs, actie.</p>
-      <div style="overflow-x:auto;">
-        <table><thead><tr>
-          <th data-i18n="th.onderwerp">Onderwerp</th><th data-i18n="th.feiten">Feiten bekend</th>
-          <th data-i18n="th.bron">Bron</th><th data-i18n="th.bewijs">Bewijs</th><th data-i18n="th.aandacht">Aandacht</th>
-        </tr></thead><tbody id="navbody"></tbody></table>
-      </div>
-      <p class="no-verdict" data-i18n="nav.noverdict">Geen oordeel, geen score, geen “groen = veilig”. Alleen: wat is bekend, waaruit blijkt het, en wat ontbreekt.</p>
+      <h3>Wat het systeem hier wél mag</h3>
+      <ul class="fijn" id="mag-wel"></ul>
     </div>
+    <div class="card">
+      <h3>Wat het systeem hier niet mag</h3>
+      <ul class="fijn" id="mag-niet"></ul>
+    </div>
+  </div>
+</section>
 
-  </section>
+<!-- ---------- STAP 3 · ONDERBOUWING (SCOREKAART) ---------- -->
+<section class="stap" id="s3" role="tabpanel" aria-label="Stap 3 — Onderbouwing">
+  <h2>Bestuurlijke scorekaart — wie wordt hier beter van?</h2>
+  <p class="vraag">Geen enkelvoudig eindcijfer en geen “beste scenario”.</p>
 
-  <!-- WERELD 3 — REGIE -->
-  <section class="world" id="w3" role="tabpanel">
-    <p class="hint" data-i18n="w3.intro">Regie: acties, besluit en vastlegging. Het besluit is een gevolg, geen apart eiland.</p>
-    <div class="grid2">
-      <div class="card">
-        <h3 data-i18n="acties.title">Acties</h3>
-        <div id="actions"></div>
-      </div>
-      <div class="card decision">
-        <h3 data-i18n="besluit.title">Besluit — waarop rust mijn keuze?</h3>
-        <div class="valblock">
-          <div class="val-row">
-            <span class="lbl" data-i18n="val.concept">Conceptconclusie (FlexCare)</span>
-            <span class="badge open" id="val-status" data-i18n="val.concept-status">Concept — nog niet gevalideerd</span>
-          </div>
-          <p class="val-concl" data-i18n="val.concl">Onderbouwing onvolledig (8/10). Open vragen op Gezag en Vervanging. FlexCare structureert en onderbouwt; het oordeel is aan de mens.</p>
-          <p class="val-onz" data-i18n="val.onz">Onzekerheid: middel — 2 open vragen, 1 bron gewijzigd.</p>
-          <div class="val-ctl">
-            <select id="validator" aria-label="Validatorrol">
-              <option value="" data-i18n="val.kies">Kies validatorrol…</option>
-              <option value="jurist" data-i18n="val.jurist">Jurist</option>
-              <option value="compliance" data-i18n="val.compliance">Compliance officer</option>
-            </select>
-            <button class="btn" id="validate" data-i18n="val.btn">Menselijke validatie vastleggen</button>
-          </div>
-          <p class="val-disc" data-i18n="val.disc">FlexCare signaleert, structureert en onderbouwt — het neemt geen juridisch besluit.</p>
-        </div>
-        <div class="opts" role="group">
-          <button class="opt" aria-pressed="true" data-i18n="opt.verlengen">Verlengen</button>
-          <button class="opt" aria-pressed="false" data-i18n="opt.beeindigen">Beëindigen</button>
-          <button class="opt" aria-pressed="false" data-i18n="opt.herzien">Herzien</button>
-          <button class="opt" aria-pressed="false" data-i18n="opt.aanhouden">Aanhouden</button>
-        </div>
-        <p class="sectiontitle" data-i18n="besluit.basis">Waarop rust deze keuze? — feiten, geen advies</p>
-        <ul class="basis" id="basis"></ul>
-        <textarea id="reason" data-i18n-ph="besluit.reason" placeholder="Toelichting bij dit besluit (optioneel) — wordt vastgelegd in het auditspoor"></textarea>
-        <div style="margin-top:16px;">
-          <button class="btn" id="commit" data-i18n="besluit.commit">Vastleggen als beslissing</button>
-        </div>
-        <div class="audit" id="audit"><p class="sectiontitle" data-i18n="audit.title">Auditspoor</p></div>
+  <div class="card">
+    <h3>Scenario × belang</h3>
+    <p class="hint" id="sk-uitleg"></p>
+    <div class="tabelwrap"><table id="scorekaart"></table></div>
+    <div class="knoprij">
+      <span class="badge ondersteund">Ondersteund</span>
+      <span class="badge gedeeltelijk">Gedeeltelijk</span>
+      <span class="badge niet">Niet</span>
+      <span class="badge onbekend">Onvoldoende onderbouwd</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Waarop berust een beoordeling?</h3>
+    <p class="hint">Kies een cel-combinatie om de onderbouwing te zien. Geen verborgen berekening.</p>
+    <div class="veldrij">
+      <label class="veld"><span class="lbl">Belang</span><select id="sel-belang"></select></label>
+      <label class="veld"><span class="lbl">Scenario</span><select id="sel-scenario"></select></label>
+    </div>
+    <div id="sk-bewijs"></div>
+  </div>
+
+  <div class="card">
+    <h3>Ontbrekende informatie</h3>
+    <div id="sk-ontbreekt"></div>
+  </div>
+</section>
+
+<!-- ---------- STAP 4 · ALTERNATIEVEN & CONFLICTEN ---------- -->
+<section class="stap" id="s4" role="tabpanel" aria-label="Stap 4 — Alternatieven">
+  <h2>Botsende belangen en afgevallen alternatieven</h2>
+  <p class="vraag">Conflicten worden getoond, niet weggemiddeld. Dit vraagt een bestuurlijke keuze.</p>
+
+  <div class="card">
+    <h3>Botsende belangen</h3>
+    <p class="hint">
+      Deze belangen kunnen niet tegelijk maximaal worden vervuld. Het systeem kiest niet wie voorgaat.
+    </p>
+    <div id="conflicten"></div>
+  </div>
+
+  <div class="card">
+    <h3>Afgevallen en niet-onderzochte alternatieven</h3>
+    <p class="hint">Wat is bewust <em>niet</em> meegenomen, en waarom — zodat de keuze reconstrueerbaar blijft.</p>
+    <div class="tabelwrap"><table id="afgevallen"></table></div>
+  </div>
+</section>
+
+<!-- ---------- STAP 5 · ONZEKERHEDEN ---------- -->
+<section class="stap" id="s5" role="tabpanel" aria-label="Stap 5 — Onzekerheden">
+  <h2>Onzekerheden — welke bronnen spreken elkaar tegen?</h2>
+  <p class="vraag">Meerdere werkelijkheden mogen naast elkaar bestaan. Het systeem lost ze niet op.</p>
+
+  <div class="card">
+    <h3>Bronbetrouwbaarheid per meetvariabele</h3>
+    <p class="hint">
+      Bij een conflict wordt géén samengevoegde waarde gemaakt. Beide waarden en hun betrouwbaarheid
+      blijven zichtbaar. De betrouwbaarheid van een bron wordt bepaald door de <em>laagste</em> as —
+      dekking, directheid, actualiteit of ruisarmheid.
+    </p>
+    <div id="metingen"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Toegepaste kengetallen, met herkomst</h3>
+      <p class="hint">
+        Alleen een wettelijke bron mag een variant diskwalificeren. Een marktindicatie weegt mee,
+        maar mag nooit een optie afvoeren.
+      </p>
+      <div class="tabelwrap"><table id="kengetallen"></table></div>
+      <div class="nietgebouwd">
+        <span class="lbl">Afwijking in deze mock-up</span>
+        In het product staat bij elk kengetal de <b>naam van de bron</b> met jaar en bandbreedte.
+        Hier is de bronnaam vervangen door het <b>brontype</b>, om geen externe partijnamen op te nemen.
+        De werking — herkomst zichtbaar, en alleen wet als harde poort — is ongewijzigd.
       </div>
     </div>
-  </section>
+    <div class="card">
+      <h3>Signalen — verdient nader onderzoek</h3>
+      <p class="hint">Het systeem zegt nooit “dit is fout”, maar “dit verdient nader onderzoek”.</p>
+      <div id="signalen"></div>
+    </div>
+  </div>
+</section>
 
-  <!-- WERELD — DOSSIER (controleklaar export-preview) -->
-  <section class="world" id="wdos" role="tabpanel">
-    <div class="card dossier"><div id="dossier"></div></div>
-  </section>
+<!-- ---------- STAP 6 · KANTELPUNT ---------- -->
+<section class="stap" id="s6" role="tabpanel" aria-label="Stap 6 — Kantelpunt">
+  <h2>Kantelpunt — waardoor verandert de uitkomst?</h2>
+  <p class="vraag">Het systeem toont de breekbaarheid van zijn eigen uitkomst.</p>
 
-  <p class="foot" data-i18n="foot">Interactieve mock-up met demodata — geen echt dossier, geen juridische informatie. FlexCare · Decision Support.</p>
+  <div class="card">
+    <h3>Draai aan één aanname</h3>
+    <p class="hint">
+      Verander één onderbouwd uitgangspunt en zie of de scorekaart kantelt. De scorekaart hierboven
+      en de tegels bovenaan rekenen mee.
+    </p>
+    <div class="veldrij" id="knoppen-invoer"></div>
+    <div class="knoprij">
+      <button class="knop ghost" id="reset">Terug naar uitgangswaarden</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Waardoor kan dit veranderen</h3>
+    <div id="kantelpunten"></div>
+    <div class="uitleg">
+      Elke beoordeling is een aanname onder condities — een mens beslist wanneer die wijzigen.
+    </div>
+  </div>
+</section>
+
+<!-- ---------- STAP 7 · BESLUIT ---------- -->
+<section class="stap" id="s7" role="tabpanel" aria-label="Stap 7 — Besluit">
+  <h2>Besluit — vastleggen wat een mens besluit</h2>
+  <p class="vraag">Het systeem structureert en bewaakt de vastlegging. Het besluit is menselijk.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Bewijsstatus vóór het besluit</h3>
+      <div id="bewijsstatus"></div>
+    </div>
+    <div class="card">
+      <h3>Keuze en motivatie</h3>
+      <label class="veld"><span class="lbl">Gekozen scenario</span><select id="besluit-scenario"></select></label>
+      <label class="veld">
+        <span class="lbl">Motivatie (wordt getoetst vóór vastlegging)</span>
+        <textarea id="motivatie" placeholder="Waarom deze keuze, en op welke onderbouwing rust die?"></textarea>
+      </label>
+      <div class="knoprij">
+        <button class="knop" id="vastleggen">Besluit vastleggen</button>
+        <button class="knop ghost" id="probeer-overclaim">Probeer een overclaim</button>
+        <button class="knop ghost" id="probeer-summier">Probeer een te summiere motivatie</button>
+      </div>
+      <div id="guard-uitslag"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Draagvlak — sponsor-akkoord</h3>
+    <p class="hint">
+      Een besluit wordt ter accordering aangeboden aan de bestuurlijke sponsor via een persoonlijke,
+      tijdelijke link. De sponsor heeft geen account nodig.
+    </p>
+    <div id="sponsor"></div>
+    <div class="nietgebouwd">
+      <span class="lbl">Openstaande poort in het product — geen mock-up-detail</span>
+      <ul>
+        <li>Op het <b>in-app</b> akkoordpad is op 30-07-2026 een verse-verificatie-eis vóór het akkoord
+          toegevoegd. Op het <b>externe linkpad dat hierboven wordt getoond</b> — sponsor zonder account —
+          bestaat die eis niet; daar wacht nog een eigenaarsbesluit. De MFA-markering op het akkoord is
+          in beide gevallen nog een vaste waarde in de code (bevinding BR-H2, in het register
+          <b>OPEN</b>).</li>
+        <li>Van de verificatiepoort is inmiddels bewezen dat hij <b>weigert</b> én dat hij
+          <b>doorlaat</b>, óók in de browser: er is een reis van inschrijving tot geslaagde
+          handeling vastgelegd. Die reis legde een defect bloot dat 1015 groene unittests
+          niet konden tonen — de verificatie werd binnen dezelfde aanvraag weer gewist.
+          <b>Wat dat bewijs niet dekt:</b> het draait alleen lokaal en met de hand, niet in een
+          pijplijn, en het <b>externe tokenpad</b> — precies het pad dat hierboven wordt
+          getoond — is er niet mee getoetst.</li>
+        <li>Voor de token-gebonden paden (sponsorlink, klantportaal) is <b>cross-tenant-leesgedrag</b>
+          als openstaande bevinding vastgelegd (AS-H1). Die paden lopen per constructie buiten de
+          databasepolicies om.</li>
+      </ul>
+      Zolang die poorten open staan is dit onderdeel niet geschikt voor gebruik met echte gegevens.
+    </div>
+  </div>
+</section>
+
+<!-- ---------- STAP 8 · BEWIJS ---------- -->
+<section class="stap" id="s8" role="tabpanel" aria-label="Stap 8 — Bewijs">
+  <h2>Bewijs — wat is later te reconstrueren?</h2>
+  <p class="vraag">En, even belangrijk: wat níet.</p>
+
+  <div class="card">
+    <h3>Vastleggingsspoor</h3>
+    <p class="hint">
+      Elke betekenisvolle overgang wordt vastgelegd met tijd, actor, onderdeel, reden en de
+      voorgaande en nieuwe waarde. Het spoor wordt alleen aangevuld, niet herschreven.
+    </p>
+    <div class="tabelwrap"><table id="audit"></table></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Wat het besluitdossier bundelt</h3>
+      <ul class="fijn" id="dossier-secties"></ul>
+      <div class="bron">
+        <span class="lbl">Aannames over het dossier zelf</span>
+        <ul>
+          <li>Het dossier is volledig afgeleid uit de vastgelegde gegevens; er is niets aan toegevoegd of geïnterpreteerd.</li>
+          <li>Het is een momentopname en herberekent zodra de onderliggende gegevens wijzigen.</li>
+          <li>Alleen de ingevoerde gegevens zijn beoordeeld; het ontbreken van een signaal is geen bevestiging van volledigheid.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Claimgrenzen — niet oprekken</h3>
+      <div id="claimgrenzen"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- STAP 9 · VERVOLGSTAP ---------- -->
+<section class="stap" id="s9" role="tabpanel" aria-label="Stap 9 — Vervolgstap">
+  <h2>Vervolgstap — een besluit zonder opvolging is halve regie</h2>
+  <p class="vraag">Van besluit naar uitvoering, meting en herijking.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Opvolging</h3>
+      <div class="tabelwrap"><table id="opvolging"></table></div>
+    </div>
+    <div class="card">
+      <h3>Monitoring</h3>
+      <div id="monitoring"></div>
+      <div class="uitleg">
+        De aandachtsdrempel (kans × impact) is een bewuste inrichtingskeuze van het product,
+        geen externe norm.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Evaluatie en herijking</h3>
+    <p class="hint">
+      Een gemeten resultaat kwalificeert pas iets als de meting zelf gekwalificeerd is: methode,
+      periode, dekking en representativiteit horen bij het cijfer.
+    </p>
+    <div id="evaluatie"></div>
+    <div id="herijking"></div>
+    <div class="nietgebouwd">
+      <span class="lbl">Claimgrens</span>
+      Een meetprofiel kwalificeert de meting. Het vervangt geen onafhankelijke validatie van de
+      meetketen zelf.
+    </div>
+  </div>
+</section>
+
+<div class="voet">
+  <p>
+    <b>Mock-up met synthetische data.</b> “Demo Zorggroep Vlierhof” bestaat niet. Alle stakeholders zijn
+    rollen, niet personen. Er staan geen persoonsgegevens, e-mailadressen, adressen of klantnamen in dit
+    bestand. Alle getallen zijn verzonnen en dienen alleen om de werking te tonen.
+  </p>
+  <p>
+    <b>Rekenwerk.</b> De scorekaart, het kantelpunt en de motivatietoets in deze mock-up zijn een
+    <em>nabouw</em> van de gepubliceerde regels van het product (beoordelingsbanden 0,67 en 0,34;
+    laagste-as-domineert; de lijst met verboden claimtermen). Het is niet de code van het product en geen
+    bewijs dat het product zich zo gedraagt.
+  </p>
+  <p>Borght Huisvestingsregie · Borght Facility Management · besluitondersteuning voor bestuurders.</p>
+</div>
+
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
