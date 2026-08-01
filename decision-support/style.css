@@ -110,13 +110,16 @@ button{font-family:inherit;cursor:pointer;}
 /* ---------- claimbalk (permanent zichtbaar) ---------- */
 
 .claimbar{background:var(--warning-bg);border-bottom:1px solid var(--warning);padding:var(--sp-3) 0;}
-.claimbar .wrap{display:flex;gap:var(--sp-4);align-items:flex-start;}
+/* flex-wrap + min-width:0: zonder beide duwt een lange, onbreekbare
+   bestandsnaam de hele pagina breder dan het scherm op een telefoon. */
+.claimbar .wrap{display:flex;gap:var(--sp-4);align-items:flex-start;flex-wrap:wrap;}
 .claimbar .kop{
   font-size:12px;font-weight:600;text-transform:uppercase;
   letter-spacing:var(--track-caps);color:var(--warning);white-space:nowrap;padding-top:3px;
 }
-.claimbar p{font-size:13.5px;}
+.claimbar p{font-size:13.5px;min-width:0;flex:1 1 320px;}
 .claimbar b{font-weight:600;}
+code{font-size:.92em;overflow-wrap:anywhere;word-break:break-word;}
 
 /* ---------- projectcontext ---------- */
 
